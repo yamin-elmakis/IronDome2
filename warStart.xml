@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<war>
+	<missileLaunchers>
+		<launcher id="L101" isHidden="false">
+			<missile id="M1" destination="Sderot" launchTime="2" flyTime="12" damage="1500"/>
+			<missile id="M2" destination="Beer-Sheva" launchTime="5" flyTime="7" damage="2000"/>
+		</launcher>
+		<launcher id="L102" isHidden="true">
+			<missile id="M3" destination="Ofakim" launchTime="4" flyTime="3" damage="5000"/>
+			<missile id="M4" destination="Beer-Sheva" launchTime="9" flyTime="7" damage="1000"/>
+		</launcher>
+		<launcher id="L103" isHidden="true">
+			<missile id="M5" destination="BenAmir" launchTime="10" flyTime="3" damage="5000"/>
+			<missile id="M6" destination="GuyEshel" launchTime="17" flyTime="7" damage="1000"/>
+			<missile id="M8" destination="t2" launchTime="30" flyTime="3" damage="1000"/>
+		</launcher>
+		<launcher id="L104" isHidden="true">
+			<missile id="M7" destination="t1" launchTime="30" flyTime="3" damage="2000"/>
+			<missile id="M9" destination="t7" launchTime="35" flyTime="8" damage="2222"/>
+		</launcher>
+	</missileLaunchers>
+	<missileDestructors>
+		<destructor id="D201">
+			<destructdMissile id="M1" destructAfterLaunch="4"/>
+			<destructdMissile id="M3" destructAfterLaunch="7"/>
+			<destructdMissile id="M4" destructAfterLaunch="2"/>
+			<destructdMissile id="M9" destructAfterLaunch="37"/>
+		</destructor>
+		<destructor id="D202">
+			<destructdMissile id="M2" destructAfterLaunch="3"/>
+		</destructor>
+		<destructor id="D203">
+			<destructdMissile id="M5" destructAfterLaunch="12"/>
+			<destructdMissile id="M6" destructAfterLaunch="17"/>
+			<destructdMissile id="M9" destructAfterLaunch="37"/>
+		</destructor>
+	</missileDestructors>
+	<missileLauncherDestructors>
+		<destructor type="plane">
+			<destructedLanucher id="L101" destructTime="4"/>
+		</destructor>
+		<destructor type="ship">
+			<destructedLanucher id="L102" destructTime="8"/>
+			<destructedLanucher id="L102" destructTime="12"/>
+		</destructor>
+		<destructor type="plane">
+			<destructedLanucher id="L103" destructTime="8"/>
+		</destructor>
+		<destructor type="plane">
+			<destructedLanucher id="L103" destructTime="20"/>
+		</destructor>
+	</missileLauncherDestructors>
+</war>

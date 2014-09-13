@@ -52,18 +52,14 @@ public class ConsoleView extends Thread {
 		System.out.println(menu);
 
 		while (!flag) {
-
 			try {
 				choise = input.nextInt();
 				flag = true;
-
 			} catch (NumberFormatException e) {
 				System.out.println("Worng input, please try again:");
 				choise = input.nextInt();
 			}
-
 		}
-
 		return choise;
 	}
 
@@ -74,31 +70,24 @@ public class ConsoleView extends Thread {
 		case 1:
 			fireAddDefenseLauncherDestructor();
 			break;
-
 		case 2:
 			fireAddDefenseIronDome();
 			break;
-
 		case 3:
 			fireAddEnemyLauncher();
 			break;
-
 		case 4:
 			fireAddEnemyMissile();
 			break;
-
 		case 5:
 			fireInterceptEnemyLauncher();
 			break;
-
 		case 6:
 			fireInterceptMissile();
 			break;
-
 		case 7:
 			fireShowStatistics();
 			break;
-
 		case 8:
 			fireFinishWar();
 			break;
@@ -139,11 +128,9 @@ public class ConsoleView extends Thread {
 
 				int size = launchersIds.size();
 				for (int i = 0; i < size; i++)
-					System.out.println("\t" + (i + 1) + ")"
-							+ launchersIds.get(i));
+					System.out.println("\t" + (i + 1) + ")" + launchersIds.get(i));
 
-				System.out
-						.println("Choose launcher id to equip, else press enter to continue");
+				System.out.println("Choose launcher id to equip, else press enter to continue");
 
 				input.nextLine();
 				String launcher = input.nextLine();

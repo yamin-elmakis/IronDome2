@@ -13,6 +13,7 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import org.xml.sax.SAXException;
 
+import TzukEitan.dal.WarDB;
 import TzukEitan.war.War;
 import TzukEitan.war.WarControl;
 
@@ -24,6 +25,7 @@ public class TzukEitan {
 		ConsoleView view = new ConsoleView();
 		War warModel = new War();
 
+		WarDB warDB = new WarDB(warModel);
 		WarControl warControl = new WarControl(warModel, view);
 
 		try {

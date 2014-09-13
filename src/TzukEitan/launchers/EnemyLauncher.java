@@ -10,7 +10,7 @@ import TzukEitan.utils.Utils;
 import TzukEitan.war.WarLogger;
 import TzukEitan.war.WarStatistics;
 
-public class EnemyLauncher extends Thread implements Munitions{
+public class EnemyLauncher extends Thread implements Munitions {
 	private List<WarEventListener> allListeners;
 
 	private String id;
@@ -41,7 +41,6 @@ public class EnemyLauncher extends Thread implements Munitions{
 				try {
 					// Wait until user want to fire a missile
 					wait();
-					
 				}
 				// Exception is called when launcher has been hit
 				catch (InterruptedException ex) {
@@ -66,7 +65,6 @@ public class EnemyLauncher extends Thread implements Munitions{
 
 		// close the handler of the logger
 		WarLogger.closeMyHandler(id);
-		
 	}// run
 	
 	// setting the next missile the user want to launch

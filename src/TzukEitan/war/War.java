@@ -25,7 +25,7 @@ public class War extends Thread {
 	public War() {
 		allListeners = new LinkedList<WarEventListener>();
 		statistics = new WarStatistics();
-
+		
 		registerListenerts(new WarLogger());
 		WarLogger.addWarLoggerHandler("War");
 	}

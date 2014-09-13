@@ -55,7 +55,6 @@ public class WarStatistics {
 		return totalDamage;
 	}
 	
-	
 	public long[] statisticsToArray(){
 		long[] arr = new long[5];
 		arr[0] = numOfLaunchMissiles;

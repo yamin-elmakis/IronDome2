@@ -42,8 +42,7 @@ public class EnemyMissile extends Thread {
 			// Interrupt is thrown when Enemy missile has been hit.
 		} catch (InterruptedException ex) {
 			// this event was already being thrown by the missile (defense) who
-			// hit this
-			// missile.
+			// hit this missile.
 			synchronized (this) {
 				beenHit = true;
 			}

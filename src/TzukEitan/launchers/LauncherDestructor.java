@@ -14,7 +14,7 @@ import TzukEitan.war.WarStatistics;
 public class LauncherDestructor extends Thread implements Munitions{
 	private List<WarEventListener> allListeners;
 
-	private String id;
+	private String ldId;
 	private String type; // plane or ship
 	private boolean isRunning = true;
 	private boolean isBusy = false;
@@ -22,18 +22,19 @@ public class LauncherDestructor extends Thread implements Munitions{
 	private WarStatistics statistics;
 	private DefenseDestructorMissile currentMissile;
 
-	public LauncherDestructor(String type, String id, WarStatistics statistics) {
+	public LauncherDestructor(String type, String ldId, WarStatistics statistics) {
 		allListeners = new LinkedList<WarEventListener>();
 
-		this.id = id;
+		this.ldId = ldId;
 		this.type = Utils.capitalize(type);
 		this.statistics = statistics;
 
-		WarLogger.addLoggerHandler(this.type, id);
+		WarLogger.addLoggerHandler(this.type, ldId);
 	}
 
 	public void run() {
-
+		fireLauncherAddedEvent();
+		
 		while (isRunning) {
 			synchronized (this) {
 				try {
@@ -45,6 +46,7 @@ public class LauncherDestructor extends Thread implements Munitions{
 					break;
 				}
 			}// synchronized
+			
 			// with this boolean you can see if the launcher is available to use
 			isBusy = true;
 
@@ -72,7 +74,7 @@ public class LauncherDestructor extends Thread implements Munitions{
 		}// while
 		
 		// close the handler of the logger
-		WarLogger.closeMyHandler(id);
+		WarLogger.closeMyHandler(ldId);
 	}// run
 
 	
@@ -114,7 +116,7 @@ public class LauncherDestructor extends Thread implements Munitions{
 		String MissileId = IdGenerator.defenseDestractorLauncherMissileIdGenerator(type.charAt(0));
 
 		// create new missile
-		currentMissile = new DefenseDestructorMissile(MissileId, toDestroy, id,
+		currentMissile = new DefenseDestructorMissile(MissileId, toDestroy, ldId,
 				type, statistics);
 
 		// register all listeners
@@ -127,9 +129,16 @@ public class LauncherDestructor extends Thread implements Munitions{
 	}
 
 	// Event
+	private void fireLauncherAddedEvent() {
+		for (WarEventListener l : allListeners) {
+			l.defenseLauncherDestructorAdded(ldId, type);
+		}
+	}
+		
+	// Event
 	private void fireLaunchMissileEvent(String missileId) {
 		for (WarEventListener l : allListeners) {
-			l.defenseLaunchMissile(id, type, missileId,
+			l.defenseLaunchMissile(ldId, type, missileId,
 					toDestroy.getLauncherId());
 		}
 	}
@@ -137,14 +146,14 @@ public class LauncherDestructor extends Thread implements Munitions{
 	// Event
 	private void fireLauncherIsHiddenEvent(String launcherId) {
 		for (WarEventListener l : allListeners) {
-			l.defenseMissInterceptionHiddenLauncher(id, type, launcherId);
+			l.defenseMissInterceptionHiddenLauncher(ldId, type, launcherId);
 		}
 	}
 	
 	// Event
 	private void fireLauncherNotExist(String launcherId) {
 		for (WarEventListener l : allListeners)
-			l.enemyLauncherNotExist(id, launcherId);	
+			l.enemyLauncherNotExist(ldId, launcherId);	
 	}
 
 	public void registerListeners(WarEventListener listener) {
@@ -157,7 +166,7 @@ public class LauncherDestructor extends Thread implements Munitions{
 	}
 
 	public String getDestructorId() {
-		return id;
+		return ldId;
 	}
 
 	@Override

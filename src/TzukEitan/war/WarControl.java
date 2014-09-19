@@ -47,8 +47,8 @@ public class WarControl implements WarEventListener, WarEventUIListener{
 	}
 
 	@Override
-	public void defenseHitInterceptionMissile(String whoLaunchedMeId, String missileId, String enemyMissileId) {
-		view.showHitInterceptionMissile(whoLaunchedMeId, missileId, enemyMissileId);
+	public void defenseHitInterceptionMissile(String whoLaunchedMeId, String interceptorId, String enemyMissileId) {
+		view.showHitInterceptionMissile(whoLaunchedMeId, interceptorId, enemyMissileId);
 	}
 
 	@Override
@@ -91,8 +91,7 @@ public class WarControl implements WarEventListener, WarEventUIListener{
 
 	@Override
 	public Vector<String> chooseMissileToIntercept() {
-		Vector<String> ids = warModel.getAllDuringFlyMissilesIds();
-		return ids;
+		return warModel.getAllDuringFlyMissilesIds();
 	}
 
 	@Override
@@ -117,14 +116,12 @@ public class WarControl implements WarEventListener, WarEventUIListener{
 	
 	@Override
 	public Vector<String> chooseLauncherToIntercept() {
-		Vector<String> ids = warModel.getAllVisibleLaunchersIds();
-		return ids;
+		return warModel.getAllVisibleLaunchersIds();
 	}
 
 	@Override
 	public Vector<String> showAllLaunchers() {
-		Vector<String> ids = warModel.getAllLaunchersIds();
-		return ids;
+		return warModel.getAllLaunchersIds();
 	}
 
 	@Override
@@ -134,38 +131,32 @@ public class WarControl implements WarEventListener, WarEventUIListener{
 
 	@Override
 	public String addEnemyLauncher(String launcherId, boolean isHidden) {
-		String id = warModel.addEnemyLauncher(launcherId, isHidden);
-		return id;
+		return warModel.addEnemyLauncher(launcherId, isHidden);
 	}
 	
 	@Override
 	public String addEnemyLauncher() {
-		String id = warModel.addEnemyLauncher();
-		return id;
+		return warModel.addEnemyLauncher();
 	}
 
 	@Override
 	public String addIronDome() {
-		String id = warModel.addIronDome();
-		return id;
+		return warModel.addIronDome();
 	}
 	
 	@Override
 	public String addIronDome(String id) {
-		String iId = warModel.addIronDome(id);
-		return iId;
+		return warModel.addIronDome(id);
 	}
 
 	@Override
 	public String addDefenseLauncherDestructor(String type) {
-		String id = warModel.addDefenseLauncherDestructor(type);
-		return id;
+		return warModel.addDefenseLauncherDestructor(type);
 	}
 
 	@Override
 	public String[] getAllWarDestinations() {
-		String[] warTargets = warModel.getAllTargetCities();
-		return warTargets;
+		return warModel.getAllTargetCities();
 	}
 
 	@Override
@@ -195,16 +186,28 @@ public class WarControl implements WarEventListener, WarEventUIListener{
 	}
 	
 	@Override
-	public void enemyLauncherNotExist(String defenseLauncherId,
-			String launcherId) {
+	public void enemyLauncherNotExist(String defenseLauncherId, String launcherId) {
 		view.showLauncherNotExist(defenseLauncherId, launcherId);
 	}
 
 	@Override
-	public void enemyMissDestination(String whoLaunchedMeId, String id,
-			String destination, String launchTime) {
+	public void enemyMissDestination(String whoLaunchedMeId, String id, String destination, String launchTime) {
 		view.showEnemyMissDestination(whoLaunchedMeId, id, destination, launchTime);
 	}
 
+	@Override
+	public void enemyAddedLauncher(String launcherId, boolean visible) {
+		view.showEnemyAddedLaunch(launcherId, visible);
+	}
+
+	@Override
+	public void defenseIronDomeAdded(String ironDomeId) {
+		view.showDefenseAddedIronDome(ironDomeId);
+	}
+
+	@Override
+	public void defenseLauncherDestructorAdded(String ldId, String type) {
+		view.showDefenseAddedLD(ldId, type);
+	}
 
 }

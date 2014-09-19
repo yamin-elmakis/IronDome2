@@ -193,7 +193,6 @@ public class War extends Thread {
 					break;
 				}
 			}
-
 	}
 
 	// intercept given launcher id
@@ -216,8 +215,7 @@ public class War extends Thread {
 	}
 
 	//intercept given missile id and launcher
-	private void interceptGivenLauncher(String launcherId,
-			LauncherDestructor destructor) {
+	private void interceptGivenLauncher(String launcherId, LauncherDestructor destructor) {
 		for (EnemyLauncher el : enemyLauncherArr) {
 			
 			if (el.getLauncherId().equals(launcherId) && el.isAlive()) {
@@ -278,8 +276,7 @@ public class War extends Thread {
 		return visibleIds;
 	}
 
-	public void launchEnemyMissile(String launcherId, String destination,
-			int damage, int flyTime) {
+	public void launchEnemyMissile(String launcherId, String destination, int damage, int flyTime) {
 		for (EnemyLauncher el : enemyLauncherArr) {
 			// Check if there is enemy launcher with given id
 			if (el.getLauncherId().equals(launcherId) && el.isAlive()) {
@@ -290,9 +287,7 @@ public class War extends Thread {
 						el.setMissileInfo(destination, damage, flyTime);
 						el.notify();
 					}//synchronized
-					
 				}//if
-				
 			}//if
 		}//for
 	}//method
@@ -301,9 +296,8 @@ public class War extends Thread {
 	public String addEnemyLauncher() {
 		String id = IdGenerator.enemyLauncherIdGenerator();
 		boolean isHidden = Math.random() < 0.5;
-
 		addEnemyLauncher(id, isHidden);
-
+		
 		return id;
 	}
 
@@ -315,7 +309,7 @@ public class War extends Thread {
 	
 		launcher.start();
 		enemyLauncherArr.add(launcher);
-	
+		
 		return launcherId;
 	}
 
@@ -357,17 +351,17 @@ public class War extends Thread {
 		return id;
 	}
 
-	public void registerListenerts(WarEventListener control) {
+	public void registerListenerts(WarEventListener listener) {
 		for (IronDome iron : ironDomeArr)
-			iron.registerListeners(control);
+			iron.registerListeners(listener);
 	
 		for (LauncherDestructor launcherDestructor : launcherDestractorArr)
-			launcherDestructor.registerListeners(control);
+			launcherDestructor.registerListeners(listener);
 	
 		for (EnemyLauncher EnemyLauncher : enemyLauncherArr)
-			EnemyLauncher.registerListeners(control);
+			EnemyLauncher.registerListeners(listener);
 	
-		allListeners.add(control);
+		allListeners.add(listener);
 	}
 
 	// Event

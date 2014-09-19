@@ -88,8 +88,17 @@ public class WarLogger implements WarEventListener {
 	}
 
 	@Override
-	public void defenseLaunchMissile(String myMunitionsId, String missileId,
-			String enemyMissileId) {
+	public void defenseIronDomeAdded(String ironDomeId) {
+		theLogger.log(Level.INFO, "Iron Dome "+ironDomeId+" added to the defense.\n");
+	}
+
+	@Override
+	public void defenseLauncherDestructorAdded(String ldId, String type) {
+		theLogger.log(Level.INFO, type +" "+ldId+" added to the defense.\n");
+	}
+
+	@Override
+	public void defenseLaunchMissile(String myMunitionsId, String missileId, String enemyMissileId) {
 		theLogger.log(Level.INFO, myMunitionsId + "\tLaunch: " + missileId
 				+ "\t\t\tTarget: " + enemyMissileId + "\n");
 	}
@@ -150,21 +159,25 @@ public class WarLogger implements WarEventListener {
 	}
 
 	@Override
-	public void enemyLauncherIsVisible(String id, boolean visible) {
+	public void enemyLauncherIsVisible(String launcherId, boolean visible) {
 		String str = visible ? "visible\n" : "hidden\n";
-		theLogger.log(Level.INFO, id + "\tis now: " + str);
+		theLogger.log(Level.INFO, launcherId + "\tis now: " + str);
 	}
 
 	@Override
-	public void enemyHitDestination(String whoLaunchedMeId, String id,
-			String destination, int damage, String launchTime) {
+	public void enemyAddedLauncher(String launcherId, boolean visible) {
+		String str = visible ? "visible" : "hidden";
+		theLogger.log(Level.INFO, str +" launcher "+launcherId+" added to the enemy.\n");
+	}
+
+	@Override
+	public void enemyHitDestination(String whoLaunchedMeId, String id, String destination, int damage, String launchTime) {
 		theLogger.log(Level.INFO, whoLaunchedMeId + "\tTarget: " + destination + "\t\tStatus: HIT" + 
 			 "\t\t\tLand Time: " + Utils.getCurrentTime() + "\t\t\tDamage: " + damage + "\n");
 	}
 
 	@Override
-	public void enemyMissDestination(String whoLaunchedMeId, String id,
-			String destination, String launchTime) {
+	public void enemyMissDestination(String whoLaunchedMeId, String id, String destination, String launchTime) {
 		theLogger.log(Level.INFO, whoLaunchedMeId + "\tTarget: " + destination + "\t\tStatus: MISS" + 
 				 "\t\t\tLand Time: " + Utils.getCurrentTime() + "\n");
 	}
@@ -172,13 +185,11 @@ public class WarLogger implements WarEventListener {
 	@Override
 	public void warHasBeenStarted() {
 		theLogger.log(Level.INFO, "====== >\tWar started\t< ======\n");
-	
 	}
 
 	@Override
 	public void warHasBeenFinished() {
 		theLogger.log(Level.INFO, "====== >\tWar finished\t< ====== \n");
-		
 	}
 
 	@Override
@@ -188,8 +199,7 @@ public class WarLogger implements WarEventListener {
 	}
 
 	@Override
-	public void enemyLauncherNotExist(String defenseLauncherId,
-			String launcherId) {
+	public void enemyLauncherNotExist(String defenseLauncherId,	String launcherId) {
 		theLogger.log(Level.INFO, defenseLauncherId + "\tFAIL: launcher " 
 				+ launcherId + " does not exist" + "\n");
 	}

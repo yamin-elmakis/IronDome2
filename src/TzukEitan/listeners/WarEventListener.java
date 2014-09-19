@@ -4,24 +4,32 @@ package TzukEitan.listeners;
 public interface WarEventListener {
 
 	/** Enemy Launch missile **/
-	public void enemyLaunchMissile(String myMunitionsId, String missileId,
-			String destination, int damage);
-
+	public void enemyLaunchMissile(String myMunitionsId, String missileId, String destination, int damage);
+	
+	/** Enemy launcher added **/
+	public void enemyAddedLauncher(String launcherId, boolean visible);
+	
 	/** Enemy is now visible **/
-	public void enemyLauncherIsVisible(String id, boolean visible);
+	public void enemyLauncherIsVisible(String launcherId, boolean visible);
 
 	/** Enemy event for hit destination **/
-	public void enemyHitDestination(String whoLaunchedMeId, String id,
+	public void enemyHitDestination(String whoLaunchedMeId, String missileId,
 			String destination, int damage, String launchTime);
 
 	/** Enemy event for miss destination **/
-	public void enemyMissDestination(String whoLaunchedMeId, String id,
+	public void enemyMissDestination(String whoLaunchedMeId, String missileId,
 			String destination, String launchTime);
 
 	/** Defense Iron Dome launch interception missile **/
 	public void defenseLaunchMissile(String myMunitionsId, String missileId,
 			String enemyMissileId);
 
+	/** Defense Iron Dome added **/
+	public void defenseIronDomeAdded(String ironDomeId);
+	
+	/** Defense Launcher Destructor added **/
+	public void defenseLauncherDestructorAdded(String ldId, String type);
+	
 	/** Defense Airplane or ship launch interception launcher **/
 	public void defenseLaunchMissile(String myMunitionsId, String type,
 			String missileId, String enemyLauncherId);
@@ -39,12 +47,10 @@ public interface WarEventListener {
 			String Type, String id, String enemyLauncherId);
 
 	/** Defense event for miss interception (to Launcher) **/
-	public void defenseMissInterceptionLauncher(String whoLaunchedMeId,
-			String Type, String id, String enemyLauncherId);
+	public void defenseMissInterceptionLauncher(String whoLaunchedMeId, String Type, String missileId, String enemyLauncherId);
 
 	/** Defense event. try to intercept launcher but he was hidden **/
-	void defenseMissInterceptionHiddenLauncher(String whoLaunchedMeId,
-			String type, String enemyLauncherId);
+	void defenseMissInterceptionHiddenLauncher(String whoLaunchedMeId, String type, String enemyLauncherId);
 
 	/** Announce when the war endss **/
 	public void warHasBeenFinished();

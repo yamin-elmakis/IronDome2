@@ -35,6 +35,8 @@ public class EnemyLauncher extends Thread implements Munitions {
 	}
 
 	public void run() {
+		// fire add launcher event
+		fireEnemyLauncheradded();
 		// this thread will be alive until he will be hit
 		while (!beenHit) {
 			synchronized (this) {
@@ -55,7 +57,6 @@ public class EnemyLauncher extends Thread implements Munitions {
 			} catch (InterruptedException e) {
 				stopRunning();
 				break;
-				//e.printStackTrace();
 			}
 
 			// update that this launcher is not in use
@@ -93,9 +94,8 @@ public class EnemyLauncher extends Thread implements Munitions {
 
 		currentMissile.start();
 
-		// X time that the launcher is not hidden:
-		int x = flyTime * Utils.SECOND;
-		sleep(x);
+		// time that the launcher is not hidden:
+		sleep(flyTime * Utils.SECOND);
 
 		// returning the first hidden state:
 		isHidden = firstHiddenState;
@@ -113,8 +113,7 @@ public class EnemyLauncher extends Thread implements Munitions {
 		String missileId = IdGenerator.enemyMissileIdGenerator();
 
 		// create new missile
-		currentMissile = new EnemyMissile(missileId, destination, flyTime,
-				damage, id, statistics);
+		currentMissile = new EnemyMissile(missileId, destination, flyTime, damage, id, statistics);
 
 		// register listeners
 		for (WarEventListener l : allListeners)
@@ -130,17 +129,21 @@ public class EnemyLauncher extends Thread implements Munitions {
 	}
 
 	// Event
+	private void fireEnemyLauncheradded() {
+		for (WarEventListener l : allListeners) 
+			l.enemyAddedLauncher(id, firstHiddenState);
+	}
+		
+	// Event
 	private void fireEnemyLauncherIsVisibleEvent(boolean visible) {
-		for (WarEventListener l : allListeners) {
+		for (WarEventListener l : allListeners) 
 			l.enemyLauncherIsVisible(id, visible);
-		}
 	}
 
 	// Event
 	private void fireLaunchMissileEvent(String missileId) {
-		for (WarEventListener l : allListeners) {
+		for (WarEventListener l : allListeners) 
 			l.enemyLaunchMissile(id, missileId, destination, damage);
-		}
 		
 		//update statistics
 		statistics.increaseNumOfLaunchMissiles();
@@ -158,6 +161,11 @@ public class EnemyLauncher extends Thread implements Munitions {
 		return isHidden;
 	}
 	
+	public boolean isBeenHit() {
+		// TODO add sync to beenHit 
+		return beenHit;
+	}
+
 	// use the stop the thread when the launcher is been hit
 	@Override
 	public void stopRunning() {

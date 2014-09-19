@@ -33,17 +33,16 @@ public class DefenseDestructorMissile extends Thread {
 
 	public void run() {
 		synchronized (launcherToDestroy) {
-			if (launcherToDestroy.isAlive() && !launcherToDestroy.getIsHidden()
-					&& Utils.randomDestractorSucces()) {
-				// Check if the launcher is hidden or not
+			if (launcherToDestroy.isAlive() && !launcherToDestroy.getIsHidden() && Utils.randomDestractorSucces()) {
 				launcherToDestroy.interrupt();
+				System.out.println("LAUNCHER interrupt !!!!!!!!");
 			}
 		}// synchronized
-	
+		// TODO add sync to beenHit and wait for it to update
+		System.out.println(launcherToDestroy.isBeenHit());
 		if(launcherToDestroy.isInterrupted()){
 			fireHitEvent();
-			
-		}else {
+		} else {
 			fireMissEvent();
 		}
 	}
@@ -51,8 +50,7 @@ public class DefenseDestructorMissile extends Thread {
 	// Event
 	private void fireHitEvent() {
 		for (WarEventListener l : allListeners) {
-			l.defenseHitInterceptionLauncher(whoLaunchedMeId,
-					whoLaunchedMeType, id, launcherToDestroy.getLauncherId());
+			l.defenseHitInterceptionLauncher(whoLaunchedMeId, whoLaunchedMeType, id, launcherToDestroy.getLauncherId());
 		}
 
 		// update statistics
@@ -62,8 +60,7 @@ public class DefenseDestructorMissile extends Thread {
 	// Event
 	private void fireMissEvent() {
 		for (WarEventListener l : allListeners) {
-			l.defenseMissInterceptionLauncher(whoLaunchedMeId,
-					whoLaunchedMeType, id, launcherToDestroy.getLauncherId());
+			l.defenseMissInterceptionLauncher(whoLaunchedMeId, whoLaunchedMeType, id, launcherToDestroy.getLauncherId());
 		}
 	}
 

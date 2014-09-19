@@ -1,6 +1,9 @@
-13/09/2014 17:29:21 INFO	====== >	War started	< ======
-13/09/2014 17:29:52 INFO	L101	Launch: M1			Target: 5
-13/09/2014 17:29:55 INFO	L101	Target: 5		Status: HIT			Land Time: 13/09/2014 17:29:55			Damage: 2479
-13/09/2014 17:30:05 INFO	L101	Launch: M2			Target: yamin
-13/09/2014 17:30:09 INFO	L101	Target: yamin		Status: HIT			Land Time: 13/09/2014 17:30:09			Damage: 2876
-13/09/2014 17:30:30 INFO	====== >	War finished	< ====== 
+19/09/2014 10:18:06 INFO	====== >	War started	< ======
+19/09/2014 10:18:13 INFO	Ship S301 added to the defense.
+19/09/2014 10:18:15 INFO	visible launcher L101 added to the enemy.
+19/09/2014 10:18:16 INFO	hidden launcher L102 added to the enemy.
+19/09/2014 10:18:17 INFO	hidden launcher L103 added to the enemy.
+19/09/2014 10:18:17 INFO	visible launcher L104 added to the enemy.
+19/09/2014 10:18:29 INFO	S301	Launch: SM2001			Target: L102
+19/09/2014 10:18:29 INFO	S301	Intercept: L102			Status: FAIL
+19/09/2014 10:20:05 INFO	====== >	War finished	< ====== 

@@ -14,23 +14,25 @@ import TzukEitan.war.WarStatistics;
 public class IronDome extends Thread implements Munitions {
 	private List<WarEventListener> allListeners;
 
-	private String id;
+	private String ironDomeId;
 	private boolean isRunning = true;
 	private boolean isBusy = false;
 	private EnemyMissile toDestroy;
 	private WarStatistics statistics;
 	private DefenseMissile currentMissile;
 
-	public IronDome(String id, WarStatistics statistics) {
+	public IronDome(String ironDomeId, WarStatistics statistics) {
 		allListeners = new LinkedList<WarEventListener>();
 
 		this.statistics = statistics;
-		this.id = id;
+		this.ironDomeId = ironDomeId;
 
-		WarLogger.addLoggerHandler("IronDome", id);
+		WarLogger.addLoggerHandler("IronDome", ironDomeId);
 	}
 
 	public void run() {
+		fireIronDomeAddedEvent();
+		
 		// this thread will be alive until the war is over
 		while (isRunning) {
 			synchronized (this) {
@@ -60,7 +62,7 @@ public class IronDome extends Thread implements Munitions {
 		}// while
 
 		// close the handler of the logger
-		WarLogger.closeMyHandler(id);
+		WarLogger.closeMyHandler(ironDomeId);
 		//ironDomeHandler.close();
 	}// run
 
@@ -91,17 +93,12 @@ public class IronDome extends Thread implements Munitions {
 		}
 	}
 
-	private void fireMissileNotExist(String missileId) {
-		for (WarEventListener l : allListeners)
-			l.missileNotExist(getIronDomeId(), missileId);;
-	}
-
 	public void createMissile() {
 		// generate missile id
 		String missieId = IdGenerator.defensMissileIdGenerator();
 
 		// create new missile
-		currentMissile = new DefenseMissile(missieId, toDestroy, id, statistics);
+		currentMissile = new DefenseMissile(missieId, toDestroy, ironDomeId, statistics);
 
 		// register listeners
 		for (WarEventListener l : allListeners)
@@ -113,10 +110,22 @@ public class IronDome extends Thread implements Munitions {
 	}
 
 	// Event
+	private void fireIronDomeAddedEvent() {
+		for (WarEventListener l : allListeners) {
+			l.defenseIronDomeAdded(ironDomeId);
+		}
+	}
+		
+	// Event
 	private void fireLaunchMissileEvent(String missileId) {
 		for (WarEventListener l : allListeners) {
-			l.defenseLaunchMissile(id, missileId, toDestroy.getMissileId());
+			l.defenseLaunchMissile(ironDomeId, missileId, toDestroy.getMissileId());
 		}
+	}
+
+	private void fireMissileNotExist(String missileId) {
+		for (WarEventListener l : allListeners)
+			l.missileNotExist(getIronDomeId(), missileId);;
 	}
 
 	public void registerListeners(WarEventListener listener) {
@@ -129,7 +138,7 @@ public class IronDome extends Thread implements Munitions {
 	}
 
 	public String getIronDomeId() {
-		return id;
+		return ironDomeId;
 	}
 
 	// use for end the thread

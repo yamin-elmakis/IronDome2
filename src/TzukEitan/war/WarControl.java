@@ -5,20 +5,25 @@ import java.util.Vector;
 import TzukEitan.listeners.WarEventListener;
 import TzukEitan.listeners.WarEventUIListener;
 import TzukEitan.view.ConsoleView;
+import TzukEitan.view.IView;
 import TzukEitan.view.WarXMLReader;
 
 
 public class WarControl implements WarEventListener, WarEventUIListener{
 	private War warModel;
-	private ConsoleView view;
+	private IView view;
 	
-	public WarControl(War warModel, ConsoleView view){
+	public WarControl(War warModel, IView view){
 		this.warModel = warModel;
 		this.view = view;
 		
 		warModel.registerListenerts(this);
 		view.registerListeners(this);
+		
+		if (view instanceof ConsoleView)
+			((ConsoleView) view).start();
 	}
+	
 	
 	//Method that related to the view
 	@Override
@@ -71,6 +76,59 @@ public class WarControl implements WarEventListener, WarEventUIListener{
 		view.showHitInterceptionLauncher(whoLaunchedMeId, type, enemyLauncherId, missileId);
 	}
 	
+
+	@Override
+	public void warHasBeenFinished() {
+		//TODO check this
+//		try {
+//			view.join();
+//		} catch (InterruptedException e) {
+//			e.printStackTrace();
+//		}
+		
+		view.showWarHasBeenFinished();
+	}
+
+	@Override
+	public void warHasBeenStarted() {
+		view.showWarHasBeenStarted();
+	}
+
+	@Override
+	public void noSuchObject(String type) {
+		view.showNoSuchObject(type);
+	}
+
+	@Override
+	public void missileNotExist(String defenseLauncherId, String enemyId) {
+		view.showMissileNotExist(defenseLauncherId, enemyId);
+	}
+	
+	@Override
+	public void enemyLauncherNotExist(String defenseLauncherId, String launcherId) {
+		view.showLauncherNotExist(defenseLauncherId, launcherId);
+	}
+
+	@Override
+	public void enemyMissDestination(String whoLaunchedMeId, String id, String destination, String launchTime) {
+		view.showEnemyMissDestination(whoLaunchedMeId, id, destination, launchTime);
+	}
+
+	@Override
+	public void enemyAddedLauncher(String launcherId, boolean visible) {
+		view.showEnemyAddedLauncher(launcherId, visible);
+	}
+
+	@Override
+	public void defenseIronDomeAdded(String ironDomeId) {
+		view.showDefenseAddedIronDome(ironDomeId);
+	}
+
+	@Override
+	public void defenseLauncherDestructorAdded(String ldId, String type) {
+		view.showDefenseAddedLD(ldId, type);
+	}
+
 	//Methods related to the model
 	@Override
 	public void finishWar() {
@@ -157,57 +215,6 @@ public class WarControl implements WarEventListener, WarEventUIListener{
 	@Override
 	public String[] getAllWarDestinations() {
 		return warModel.getAllTargetCities();
-	}
-
-	@Override
-	public void warHasBeenFinished() {	
-		try {
-			view.join();
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-		
-		view.showWarHasBeenFinished();
-	}
-
-	@Override
-	public void warHasBeenStarted() {
-		view.showWarHasBeenStarted();
-	}
-
-	@Override
-	public void noSuchObject(String type) {
-		view.showNoSuchObject(type);
-	}
-
-	@Override
-	public void missileNotExist(String defenseLauncherId, String enemyId) {
-		view.showMissileNotExist(defenseLauncherId, enemyId);
-	}
-	
-	@Override
-	public void enemyLauncherNotExist(String defenseLauncherId, String launcherId) {
-		view.showLauncherNotExist(defenseLauncherId, launcherId);
-	}
-
-	@Override
-	public void enemyMissDestination(String whoLaunchedMeId, String id, String destination, String launchTime) {
-		view.showEnemyMissDestination(whoLaunchedMeId, id, destination, launchTime);
-	}
-
-	@Override
-	public void enemyAddedLauncher(String launcherId, boolean visible) {
-		view.showEnemyAddedLaunch(launcherId, visible);
-	}
-
-	@Override
-	public void defenseIronDomeAdded(String ironDomeId) {
-		view.showDefenseAddedIronDome(ironDomeId);
-	}
-
-	@Override
-	public void defenseLauncherDestructorAdded(String ldId, String type) {
-		view.showDefenseAddedLD(ldId, type);
 	}
 
 }

@@ -8,7 +8,7 @@ import java.util.Vector;
 import TzukEitan.listeners.WarEventUIListener;
 import TzukEitan.utils.Utils;
 
-public class ConsoleView extends Thread {
+public class ConsoleView extends Thread implements IView{
 	private List<WarEventUIListener> allListeners;
 	private Scanner input = new Scanner(System.in);
 	private StringBuilder menu = new StringBuilder(1000);
@@ -260,12 +260,12 @@ public class ConsoleView extends Thread {
 				+ " its about to cause damade of: " + damage);
 	}
 
-	public void showEnemyAddedLaunch(String launcherId, Boolean visible) {
+	public void showEnemyAddedLauncher(String launcherId, boolean visible) {
 		System.out.println("[" + Utils.getCurrentTime() + "] Launcher "
 				+ launcherId + " entered the war"
 				+ (visible ? " in hidden state." : "."));
 	}
-	
+
 	public void showLauncherIsVisible(String id, boolean visible) {
 		String str = visible ? "visible" : "hidden";
 		System.out.println("[" + Utils.getCurrentTime() + "] Launcher: " + id

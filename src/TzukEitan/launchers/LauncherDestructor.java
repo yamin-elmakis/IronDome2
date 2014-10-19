@@ -109,8 +109,6 @@ public class LauncherDestructor extends Thread implements Munitions{
 		}
 	}
 
-
-
 	public void createMissile() {
 		// generate missile id
 		String MissileId = IdGenerator.defenseDestractorLauncherMissileIdGenerator(type.charAt(0));
@@ -138,8 +136,7 @@ public class LauncherDestructor extends Thread implements Munitions{
 	// Event
 	private void fireLaunchMissileEvent(String missileId) {
 		for (WarEventListener l : allListeners) {
-			l.defenseLaunchMissile(ldId, type, missileId,
-					toDestroy.getLauncherId());
+			l.defenseLaunchMissile(ldId, type, missileId, toDestroy.getLauncherId());
 		}
 	}
 

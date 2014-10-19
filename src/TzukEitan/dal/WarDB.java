@@ -100,6 +100,7 @@ public class WarDB implements WarEventListener{
 	}
 
 	private void printSQLErrors(SQLException e) {
+		System.out.println("SQLException: ");
 		while (e != null) {
 			System.out.println(e.getMessage());
 			e = e.getNextException();
@@ -332,15 +333,28 @@ public class WarDB implements WarEventListener{
 			printSQLErrors(e);
 		}// statement is auto closed here, even if SQLException is thrown
 	}
+	
 	@Override
 	public void defenseMissInterceptionLauncher(String whoLaunchedMeId, String Type, String id, String enemyLauncherId) {
-		// TODO Auto-generated method stub
-		
+		try (PreparedStatement statement = connection.prepareStatement("UPDATE defensedestructormissile SET didHit = ? WHERE DefenseDestructorMissileID = ?")){
+			statement.setBoolean(1, false);
+			statement.setString(2, id);
+			statement.executeUpdate();
+		} catch (SQLException e) {
+			printSQLErrors(e);
+		}// statement is auto closed here, even if SQLException is thrown
 	}
+	
 	@Override
-	public void defenseMissInterceptionHiddenLauncher(String whoLaunchedMeId, String type, String enemyLauncherId) {
-		// TODO Auto-generated method stub
-		
+	public void defenseMissInterceptionHiddenLauncher(String whoLaunchedMeId, String type, String enemyLauncherId) { 
+		try (PreparedStatement statement = connection.prepareStatement("UPDATE defensedestructormissile SET didHit = ? WHERE LauncherDestructorID = ? AND LauncherID = ?")){
+			statement.setBoolean(1, false);
+			statement.setString(2, whoLaunchedMeId);
+			statement.setString(3, enemyLauncherId);
+			statement.executeUpdate();
+		} catch (SQLException e) {
+			printSQLErrors(e);
+		}// statement is auto closed here, even if SQLException is thrown
 	}
 	
 	@Override

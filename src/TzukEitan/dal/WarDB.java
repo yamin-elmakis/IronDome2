@@ -107,7 +107,6 @@ public class WarDB implements WarEventListener{
 		}
 	}
 
-	@Override
 	public void warHasBeenStarted() {
 		initDB();
 	}

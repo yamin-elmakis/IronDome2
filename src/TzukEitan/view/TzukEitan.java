@@ -14,6 +14,8 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import org.xml.sax.SAXException;
 
+import TzukEitan.clientServer.WarClient;
+import TzukEitan.clientServer.WarServer;
 import TzukEitan.dal.WarDB;
 import TzukEitan.view.swing.TzukEitanFrame;
 import TzukEitan.war.War;
@@ -23,15 +25,25 @@ public class TzukEitan {
 
 	public static void main(String[] args) {
 		
-		WarXMLReader warXML;
-//
-//		IView view = new ConsoleView();
-        IView view = new TzukEitanFrame();
+		////// Yamin's code /////
+		WarServer server = new WarServer();
+		server.start();
+		WarClient client = new WarClient();
+		client.start();
+		/////////
 		
-		War warModel = new War();
+		////// Vova's code //////
+		
+		////////
+//		WarXMLReader warXML;
+
+//		IView view = new ConsoleView();
+//        IView view = new TzukEitanFrame();
+		
+//		War warModel = new War();
 //
 //		WarDB warDB = new WarDB(warModel);
-		WarControl warControl = new WarControl(warModel, view);
+//		WarControl warControl = new WarControl(warModel, view);
 //
 //		try {
 //			warXML = new WarXMLReader("warStart.xml", warControl);
@@ -47,8 +59,8 @@ public class TzukEitan {
 //		} catch (InterruptedException e) {
 //			e.printStackTrace();
 //		}
-//
-		warModel.start();
+
+//		warModel.start();
 //		view.start();
 		
 	}

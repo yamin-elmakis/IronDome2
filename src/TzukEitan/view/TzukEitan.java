@@ -7,15 +7,7 @@
 
 package TzukEitan.view;
 
-import java.io.IOException;
-
-import javax.swing.SwingUtilities;
-import javax.xml.parsers.ParserConfigurationException;
-
-import org.xml.sax.SAXException;
-
-import TzukEitan.dal.WarDB;
-import TzukEitan.view.swing.TzukEitanFrame;
+import TzukEitan.view.swing.view.TzukEitanFrame;
 import TzukEitan.war.War;
 import TzukEitan.war.WarControl;
 

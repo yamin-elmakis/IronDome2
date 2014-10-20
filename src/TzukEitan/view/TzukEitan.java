@@ -17,7 +17,7 @@ import org.xml.sax.SAXException;
 import TzukEitan.clientServer.WarClient;
 import TzukEitan.clientServer.WarServer;
 import TzukEitan.dal.WarDB;
-import TzukEitan.view.swing.TzukEitanFrame;
+import TzukEitan.view.swing.view.TzukEitanFrame;
 import TzukEitan.war.War;
 import TzukEitan.war.WarControl;
 

@@ -11,6 +11,7 @@ import javax.swing.JComboBox;
 import javax.swing.JPanel;
 
 import TzukEitan.view.IView;
+import TzukEitan.view.swing.view.TzukEitanFrame;
 
 public class ControlPanel extends JPanel implements ActionListener {
 	

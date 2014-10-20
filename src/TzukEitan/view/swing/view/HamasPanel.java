@@ -2,11 +2,11 @@ package TzukEitan.view.swing.view;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
+
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-
 import TzukEitan.view.swing.action.AddLauncherAction;
 
 
@@ -33,7 +33,11 @@ public class HamasPanel extends JPanel {
 		add(scroller, BorderLayout.CENTER);
 	}
 
-	
+	public void addLuncher(String id) {
+		humusInnerPanel.add(new LuncherPanel(id, this));
+		validate();
+		repaint();
+	}
 		
 }
 

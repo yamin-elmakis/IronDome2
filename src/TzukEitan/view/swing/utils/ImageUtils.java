@@ -1,12 +1,12 @@
-package TzukEitan.utils;
+package TzukEitan.view.swing.utils;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.net.URL;
+import java.nio.file.Paths;
 
 import javax.swing.ImageIcon;
 
 public class ImageUtils {
-	public static final String PASSENGER_ICON = "../images/pirate_64x64.png";
 	
 	public static Image getImage(String name) {
 		if (name == null || name.isEmpty()) {
@@ -14,6 +14,7 @@ public class ImageUtils {
 		}
 
 		URL imageURL = ImageUtils.class.getResource(name);
+		Paths.get(".").toAbsolutePath().normalize().toString();
 		if (imageURL == null) {
 			return null;
 		}

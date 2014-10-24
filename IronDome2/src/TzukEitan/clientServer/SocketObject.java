@@ -7,7 +7,7 @@ import TzukEitan.clientServer.SocketData.ObjType;
 public class SocketObject implements Serializable {
 
 	private ObjType type;
-	private String message;
+	private String message, launcherId, destination;
 	private String [] names;
 
 	public SocketObject() {	}
@@ -40,7 +40,20 @@ public class SocketObject implements Serializable {
 	public void setNames(String[] names) {
 		this.names = names;
 	}
-	
-	
-	
+
+	public String getLauncherId() {
+		return launcherId;
+	}
+
+	public void setLauncherId(String launcherId) {
+		this.launcherId = launcherId;
+	}
+
+	public String getDestination() {
+		return destination;
+	}
+
+	public void setDestination(String destination) {
+		this.destination = destination;
+	}
 }

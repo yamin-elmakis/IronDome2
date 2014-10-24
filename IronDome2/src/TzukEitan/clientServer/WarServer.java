@@ -3,6 +3,7 @@ package TzukEitan.clientServer;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.LinkedList;
 import java.util.List;
 
 import TzukEitan.clientServer.SocketData.ObjType;
@@ -19,51 +20,42 @@ public class WarServer extends Thread implements IView{
 	
 	public WarServer() {
 		System.out.println("enter SERVER constractor");
+		allListeners = new LinkedList<WarEventUIListener>();
 	}
 
 	@Override
 	public void run() {
 		try {
 			server = new ServerSocket(7000);
-			while (true) {
-				Socket newSocket = server.accept(); // blocking
+			Socket newSocket = server.accept(); // blocking
+			// connect
+			socket = new SocketData(newSocket);
+			SocketObject startObj = new SocketObject();
+			startObj.setType(ObjType.connect);
+			startObj.setMessage("Hello from server");
+			socket.sendData(startObj);
+			while (true){
+				SocketObject obj = socket.readData();
+			
 				new Thread(new Runnable() {
 					@Override
 					public void run() {
-						SocketObject obj;
-						// connect
-						socket = new SocketData(newSocket);
-						obj = new SocketObject();
-						obj.setType(ObjType.connect);
-						obj.setMessage("Hello from server");
-						socket.sendData(obj);
 						// manage connection
-						do {
-							obj = socket.readData();
-							if (obj.getType() == ObjType.newLauncher){
-								System.out.println("SERVER- type: " + obj.getType()+ " msg: " + obj.getMessage());
-								obj.setMessage("launcher added");
-								socket.sendData(obj);
-							}else if(obj.getType() == ObjType.shootMissile){
-								
-								int damage = (int) ((Math.random() * Utils.SECOND) + Utils.SECOND * 2);
-								int flyTime = (int) ((Math.random() * Utils.FLY_TIME) + Utils.FLY_TIME);
-								
-								System.out.println("SERVER- type: " + obj.getType()+ " msg: " + obj.getMessage());
-								obj.setMessage("missile out");
-								socket.sendData(obj);
-							}
-							
-						} while (obj != null && obj.getType() != ObjType.disConnect);
-
+						if (obj.getType() == ObjType.newLauncher){
+							fireAddLauncher();
+						}else if(obj.getType() == ObjType.shootMissile){
+							fireShootMissile(obj.getLauncherId(), obj.getDestination());
+						}
 						// dis-connect
-						obj.setType(ObjType.disConnect);
-						obj.setMessage("bye from server");
-						socket.sendData(obj);
-						socket.closeConnection();
+//						obj.setType(ObjType.disConnect);
+//						obj.setMessage("bye from server");
+//						socket.sendData(obj);
+//						socket.closeConnection();
 					}
 				}).start();
-			}
+				if (obj != null && obj.getType() != ObjType.disConnect)
+					break;
+			} 
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		} catch (Exception e2) {
@@ -84,22 +76,32 @@ public class WarServer extends Thread implements IView{
 		}
 	}
 
-	private void fireAddEnemyLauncher() {
+	private void fireAddLauncher() {
 		for (WarEventUIListener l : allListeners)
 			l.addEnemyLauncher();
+	}
+	
+	private void fireShootMissile(String launcherId, String destination) {
+		int damage = (int) ((Math.random() * Utils.SECOND) + Utils.SECOND * 2);
+		int flyTime = (int) ((Math.random() * Utils.FLY_TIME) + Utils.FLY_TIME);
+		
+		for (WarEventUIListener l : allListeners)
+			l.addEnemyMissile(launcherId, destination, damage, flyTime);
 	}
 	
 	@Override
 	public void showEnemyAddedLauncher(String launcherId, boolean visible) {
 		// TODO implement
-		
+//		obj.setMessage("launcher added");
+//		socket.sendData(obj);
 	}
 
 	@Override
 	public void showEnemyLaunchMissile(String myMunitionsId, String missileId,
 			String destination, int damage) {
 		// TODO implement
-		
+//		obj.setMessage("missile out");
+//		socket.sendData(obj);
 	}
 
 	@Override

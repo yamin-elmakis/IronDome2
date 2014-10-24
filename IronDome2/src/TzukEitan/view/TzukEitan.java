@@ -8,6 +8,8 @@
 package TzukEitan.view;
 
 import TzukEitan.clientServer.WarServer;
+import TzukEitan.war.War;
+import TzukEitan.war.WarControl;
 
 public class TzukEitan {
 
@@ -29,10 +31,11 @@ public class TzukEitan {
 //		IView view = new ConsoleView();
 //        IView view = new TzukEitanFrame();
 //		
-//		War warModel = new War();
+		War warModel = new War();
 //
 //		WarDB warDB = new WarDB(warModel);
-//		WarControl warControl = new WarControl(warModel, view);
+		WarControl warControl = new WarControl(warModel);
+		warControl.registerListeners(server);
 //
 //		try {
 //			warXML = new WarXMLReader("warStart.xml", warControl);

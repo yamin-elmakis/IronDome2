@@ -1,5 +1,7 @@
 package TzukEitan.war;
 
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Vector;
 
 import TzukEitan.listeners.WarEventListener;
@@ -11,69 +13,81 @@ import TzukEitan.view.WarXMLReader;
 
 public class WarControl implements WarEventListener, WarEventUIListener{
 	private War warModel;
-	private IView view;
+	private List<IView> allViewers;
 	
-	public WarControl(War warModel, IView view){
+	public WarControl(War warModel){
 		this.warModel = warModel;
-		this.view = view;
 		
 		warModel.registerListenerts(this);
-		view.registerListeners(this);
-		
-		if (view instanceof ConsoleView)
-			((ConsoleView) view).start();
+		allViewers = new LinkedList<IView>();
 	}
 	
+	public void registerListeners(IView viewer) {
+		allViewers.add(viewer);
+		viewer.registerListeners(this);
+		if (viewer instanceof ConsoleView)
+			((ConsoleView) viewer).start();
+	}
 	
 	//Method that related to the view
 	@Override
 	public void defenseLaunchMissile(String myMunitionsId, String missileId, String enemyMissileId) {
-		view.showDefenseLaunchMissile(myMunitionsId,missileId,enemyMissileId);
+		for (IView view : allViewers)
+			view.showDefenseLaunchMissile(myMunitionsId,missileId,enemyMissileId);
 	}
 
 	@Override
 	public void defenseLaunchMissile(String myMunitionsId, String type,	String missileId, String enemyLauncherId) {
-		view.showDefenseLaunchMissile(myMunitionsId, type, missileId, enemyLauncherId);
+		for (IView view : allViewers)	
+			view.showDefenseLaunchMissile(myMunitionsId, type, missileId, enemyLauncherId);
 	}
 
 	@Override
 	public void enemyLaunchMissile(String myMunitionsId, String missileId, String destination, int damage) {
-		view.showEnemyLaunchMissile(myMunitionsId, missileId, destination, damage);	
+		for (IView view : allViewers)
+			view.showEnemyLaunchMissile(myMunitionsId, missileId, destination, damage);	
 	}
 
 	@Override
 	public void enemyLauncherIsVisible(String id,boolean visible) {
-		view.showLauncherIsVisible(id,visible);
+		for (IView view : allViewers)
+			view.showLauncherIsVisible(id,visible);
 	}
 
 	@Override
 	public void defenseMissInterceptionMissile(String whoLaunchedMeId, String missileId, String enemyMissileId, int damage) {
-		view.showMissInterceptionMissile(whoLaunchedMeId, missileId, enemyMissileId);
+		for (IView view : allViewers)
+			view.showMissInterceptionMissile(whoLaunchedMeId, missileId, enemyMissileId);
 	}
 
 	@Override
 	public void defenseHitInterceptionMissile(String whoLaunchedMeId, String interceptorId, String enemyMissileId) {
-		view.showHitInterceptionMissile(whoLaunchedMeId, interceptorId, enemyMissileId);
+		for (IView view : allViewers)
+			view.showHitInterceptionMissile(whoLaunchedMeId, interceptorId, enemyMissileId);
 	}
 
 	@Override
 	public void enemyHitDestination(String whoLaunchedMeId, String missileId, String destination, int damage, String launchTime) {
-		view.showEnemyHitDestination(whoLaunchedMeId, missileId, destination, damage);
+		for (IView view : allViewers)
+			view.showEnemyHitDestination(whoLaunchedMeId, missileId, destination, damage);
 	}
 
 	@Override
 	public void defenseMissInterceptionLauncher(String whoLaunchedMeId,	String type, String missileId, String enemyLauncherId) {
-		view.showMissInterceptionLauncher(whoLaunchedMeId,type, enemyLauncherId, missileId);
+		for (IView view : allViewers)
+			view.showMissInterceptionLauncher(whoLaunchedMeId,type, enemyLauncherId, missileId);
 	}
 	
 	@Override
 	public void defenseMissInterceptionHiddenLauncher(String whoLaunchedMeId, String type, String enemyLauncherId) {
-		view.showMissInterceptionHiddenLauncher(whoLaunchedMeId,type, enemyLauncherId);
+		for (IView view : allViewers)
+			view.showMissInterceptionHiddenLauncher(whoLaunchedMeId,type, enemyLauncherId);
 	}
 	
 	@Override
 	public void defenseHitInterceptionLauncher(String whoLaunchedMeId, String type, String missileId, String enemyLauncherId) {
-		view.showHitInterceptionLauncher(whoLaunchedMeId, type, enemyLauncherId, missileId);
+		for (IView view : allViewers)
+			view.showHitInterceptionLauncher(whoLaunchedMeId, type, enemyLauncherId, missileId);
 	}
 	
 	@Override
@@ -85,47 +99,56 @@ public class WarControl implements WarEventListener, WarEventUIListener{
 //			e.printStackTrace();
 //		}
 		
-		view.showWarHasBeenFinished();
+		for (IView view : allViewers)
+			view.showWarHasBeenFinished();
 	}
 
 	@Override
 	public void warHasBeenStarted() {
-		view.showWarHasBeenStarted();
+		for (IView view : allViewers)
+			view.showWarHasBeenStarted();
 	}
 
 	@Override
 	public void noSuchObject(String type) {
-		view.showNoSuchObject(type);
+		for (IView view : allViewers)
+			view.showNoSuchObject(type);
 	}
 
 	@Override
 	public void missileNotExist(String defenseLauncherId, String enemyId) {
-		view.showMissileNotExist(defenseLauncherId, enemyId);
+		for (IView view : allViewers)
+			view.showMissileNotExist(defenseLauncherId, enemyId);
 	}
 	
 	@Override
 	public void enemyLauncherNotExist(String defenseLauncherId, String launcherId) {
-		view.showLauncherNotExist(defenseLauncherId, launcherId);
+		for (IView view : allViewers)
+			view.showLauncherNotExist(defenseLauncherId, launcherId);
 	}
 
 	@Override
 	public void enemyMissDestination(String whoLaunchedMeId, String id, String destination, String launchTime) {
-		view.showEnemyMissDestination(whoLaunchedMeId, id, destination, launchTime);
+		for (IView view : allViewers)
+			view.showEnemyMissDestination(whoLaunchedMeId, id, destination, launchTime);
 	}
 
 	@Override
 	public void enemyAddedLauncher(String launcherId, boolean visible) {
-		view.showEnemyAddedLauncher(launcherId, visible);
+		for (IView view : allViewers)
+			view.showEnemyAddedLauncher(launcherId, visible);
 	}
 
 	@Override
 	public void defenseIronDomeAdded(String ironDomeId) {
-		view.showDefenseAddedIronDome(ironDomeId);
+		for (IView view : allViewers)
+			view.showDefenseAddedIronDome(ironDomeId);
 	}
 
 	@Override
 	public void defenseLauncherDestructorAdded(String ldId, String type) {
-		view.showDefenseAddedLD(ldId, type);
+		for (IView view : allViewers)
+			view.showDefenseAddedLD(ldId, type);
 	}
 
 	//Methods related to the model
@@ -143,7 +166,8 @@ public class WarControl implements WarEventListener, WarEventUIListener{
 	@Override
 	public void showStatistics() {
 		WarStatistics statistics = warModel.getStatistics();
-		view.showStatistics(statistics.statisticsToArray());	
+		for (IView view : allViewers)
+			view.showStatistics(statistics.statisticsToArray());	
 	}
 
 	@Override

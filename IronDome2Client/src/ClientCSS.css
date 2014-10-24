@@ -1,0 +1,29 @@
+@CHARSET "windows-1255";
+
+.label {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #f01f1f;
+}
+
+#main_lable{
+   -fx-font-size: 35px;
+   -fx-font-family: "Comic Sans MS";
+   -fx-font-weight: bold;
+   -fx-fill: #696969;
+   -fx-effect: innershadow( three-pass-box , rgba(0,0,0,0.7) , 6, 0.0 , 0 , 2 );
+   
+}
+
+#title {
+   -fx-font-size: 32px;
+   -fx-font-family: "Comic Sans MS";
+   -fx-font-weight: bold;
+   -fx-fill: #818181;
+   -fx-effect: innershadow( three-pass-box , rgba(0,0,0,0.7) , 6, 0.0 , 0 , 2 );
+}
+
+.VBox{
+	-fx-border-color: black;
+	-fx-border-width: 2;
+}

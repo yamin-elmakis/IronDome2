@@ -1,5 +1,6 @@
 *.class
-/bin/
+/IronDome2/bin/
+/IronDome2Client/bin/
 
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
@@ -9,6 +10,7 @@
 *.war
 *.ear
 *.project
+*.settings
 *.classpath
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml

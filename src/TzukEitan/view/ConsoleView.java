@@ -8,7 +8,7 @@ import java.util.Vector;
 import TzukEitan.listeners.WarEventUIListener;
 import TzukEitan.utils.Utils;
 
-public class ConsoleView extends Thread implements IView{
+public class ConsoleView extends Thread implements IView {
 	private List<WarEventUIListener> allListeners;
 	private Scanner input = new Scanner(System.in);
 	private StringBuilder menu = new StringBuilder(1000);
@@ -226,7 +226,6 @@ public class ConsoleView extends Thread implements IView{
 		for (WarEventUIListener l : allListeners) {
 			l.finishWar();
 		}
-
 		isRunning = false;
 	}
 

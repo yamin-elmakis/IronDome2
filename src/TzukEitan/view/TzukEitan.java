@@ -7,19 +7,7 @@
 
 package TzukEitan.view;
 
-import java.io.IOException;
-
-import javax.swing.SwingUtilities;
-import javax.xml.parsers.ParserConfigurationException;
-
-import org.xml.sax.SAXException;
-
-import TzukEitan.clientServer.WarClient;
 import TzukEitan.clientServer.WarServer;
-import TzukEitan.dal.WarDB;
-import TzukEitan.view.swing.view.TzukEitanFrame;
-import TzukEitan.war.War;
-import TzukEitan.war.WarControl;
 
 public class TzukEitan {
 
@@ -28,8 +16,9 @@ public class TzukEitan {
 		////// Yamin's code /////
 		WarServer server = new WarServer();
 		server.start();
-		WarClient client = new WarClient();
-		client.start();
+//		WarClient client = new WarClient();
+		
+//		client.launch(args);
 		/////////
 		
 		////// Vova's code //////
@@ -39,7 +28,7 @@ public class TzukEitan {
 
 //		IView view = new ConsoleView();
 //        IView view = new TzukEitanFrame();
-		
+//		
 //		War warModel = new War();
 //
 //		WarDB warDB = new WarDB(warModel);

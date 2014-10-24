@@ -76,7 +76,6 @@ public class WarControl implements WarEventListener, WarEventUIListener{
 		view.showHitInterceptionLauncher(whoLaunchedMeId, type, enemyLauncherId, missileId);
 	}
 	
-
 	@Override
 	public void warHasBeenFinished() {
 		//TODO check this

@@ -11,7 +11,12 @@ public class SocketData {
 	private ObjectOutputStream outputStream;
 	
 	public static enum ObjType {
-		connect, disConnect, newLauncher, shootMissile
+		connect (0), disConnect(1), newLauncher(2), shootMissile(3), launcherDestroied(4);
+		private int value;
+		
+		private ObjType (int value){
+			this.value = value;
+		}
 	}
 	
 	public SocketData(Socket socket) {
@@ -47,6 +52,10 @@ public class SocketData {
 		return null;
 	}
 	
+	public ObjectInputStream getInputStream() {
+		return inputStream;
+	}
+
 	public void closeConnection() {
 		try {
 			socket.close();

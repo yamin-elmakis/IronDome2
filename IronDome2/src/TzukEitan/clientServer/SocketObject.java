@@ -8,7 +8,7 @@ public class SocketObject implements Serializable {
 
 	private ObjType type;
 	private String message, launcherId, destination;
-	private String [] names;
+	private String [] cityNames;
 
 	public SocketObject() {	}
 
@@ -33,12 +33,12 @@ public class SocketObject implements Serializable {
 		this.message = message;
 	}
 
-	public String[] getNames() {
-		return names;
+	public String[] getCityNames() {
+		return cityNames;
 	}
 
-	public void setNames(String[] names) {
-		this.names = names;
+	public void setCityNames(String[] cityNames) {
+		this.cityNames = cityNames;
 	}
 
 	public String getLauncherId() {

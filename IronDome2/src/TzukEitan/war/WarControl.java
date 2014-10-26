@@ -234,10 +234,4 @@ public class WarControl implements WarEventListener, WarEventUIListener{
 	public String addDefenseLauncherDestructor(String type) {
 		return warModel.addDefenseLauncherDestructor(type);
 	}
-
-	@Override
-	public String[] getAllWarDestinations() {
-		return warModel.getAllTargetCities();
-	}
-
 }

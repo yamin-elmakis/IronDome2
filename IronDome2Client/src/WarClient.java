@@ -2,6 +2,7 @@ import java.io.IOException;
 import java.net.Socket;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.event.ActionEvent;
@@ -28,16 +29,18 @@ public class WarClient extends Application {
 	
 	private ListView<String> console;
 	private Button bConnect, bAddLauncher, bShootMissile;
+	ChoiceBox<String> launchers, destinations;
 	private int width, height;
 	private double headerHeight;
 	private VBox headerPane, launcherPane, missilePane;
+	private boolean threadRead;
 
 	private void init(Stage primaryStage) {
 
 		Group root = new Group();
 		width = 700; 
 		height = 400;
-		Scene scene = new Scene(root, width, height);
+		Scene scene = new Scene(root);
 		scene.getStylesheets().add(WarClient.class.getResource("ClientCSS.css").toExternalForm());
 
 		primaryStage.setResizable(false);
@@ -62,7 +65,6 @@ public class WarClient extends Application {
 		borderPane.setCenter(console);
 
 		root.getChildren().add(borderPane);
-		
 		disableButtons(true);
 	}
 
@@ -87,17 +89,15 @@ public class WarClient extends Application {
     }
     
     public VBox addLauncherPane(){
+    	HBox hbLauncherTitle = new HBox();
+    	hbLauncherTitle.setAlignment(Pos.CENTER);
     	Label lblTitle = new Label("Add Launcher");
         lblTitle.setId("title");
+        hbLauncherTitle.getChildren().addAll(lblTitle);
         
         HBox hbLauncherState = new HBox();
         hbLauncherState.setAlignment(Pos.CENTER);
         hbLauncherState.setSpacing(10);
-        Label lblState = new Label("Launcher State: ");
-        CheckBox state = new CheckBox("Visible");
-        state.setSelected(true);
-        
-        
         bAddLauncher = new Button("Add Launcher");
         bAddLauncher.setOnAction(new AddLauncherPressed());
         hbLauncherState.getChildren().addAll(bAddLauncher);
@@ -105,40 +105,43 @@ public class WarClient extends Application {
         VBox vbLauncher = new VBox();
         vbLauncher.setId("vb_launcher");
         vbLauncher.setSpacing(20);
-        vbLauncher.getChildren().addAll(lblTitle, hbLauncherState);
+        vbLauncher.getChildren().addAll(hbLauncherTitle, hbLauncherState);
  
     	return vbLauncher;
     }
     
     public VBox addLaunchMissilePane(){
+    	HBox hbTitle = new HBox();
+    	hbTitle.setAlignment(Pos.CENTER);
 		Label lblTitle = new Label("Launch Missile");
 	    lblTitle.setId("title");
+	    hbTitle.getChildren().addAll(lblTitle);
 	    
 	    HBox hbChooseLauncher = new HBox();
 	    hbChooseLauncher.setAlignment(Pos.CENTER);
 	    hbChooseLauncher.setSpacing(10);
 	    Label lblState = new Label("Launcher: ");
-	    ChoiceBox<String> launchers = new ChoiceBox<String>();
-	    launchers.getItems().addAll("l1", "l2", "l3");
-	    launchers.getSelectionModel().selectFirst();
+	    launchers = new ChoiceBox<String>();
 	    hbChooseLauncher.getChildren().addAll(lblState, launchers);
 	    
 	    HBox hbChooseDestination = new HBox();
 	    hbChooseDestination.setAlignment(Pos.CENTER);
 	    hbChooseDestination.setSpacing(10);
 	    Label lblDest = new Label("Destination: ");
-	    ChoiceBox<String> destinations = new ChoiceBox<String>();
-	    destinations.getItems().addAll("city1", "city2", "city3");
-	    destinations.getSelectionModel().selectFirst();
+	    destinations = new ChoiceBox<String>();
 	    hbChooseDestination.getChildren().addAll(lblDest, destinations);
 	    
-	    bShootMissile = new Button("Launch");
+	    
+	    HBox hbButton = new HBox();
+	    hbButton.setAlignment(Pos.CENTER);
+    	bShootMissile = new Button("Launch");
 	    bShootMissile.setOnAction(new ShootMissilePressed());
+	    hbButton.getChildren().addAll(bShootMissile);
 	    
 	    VBox vbMissile = new VBox();
 	    vbMissile.setId("vb_missile");
 	    vbMissile.setSpacing(20);
-	    vbMissile.getChildren().addAll(lblTitle, hbChooseLauncher, hbChooseDestination, bShootMissile);
+	    vbMissile.getChildren().addAll(hbTitle, hbChooseLauncher, hbChooseDestination, hbButton);
 	
 		return vbMissile;
 	}
@@ -160,7 +163,8 @@ public class WarClient extends Application {
     
 	private void disableButtons(boolean disable){
 		bAddLauncher.setDisable(disable);
-		bShootMissile.setDisable(disable);
+		if (launchers.getItems().size() > 0 || disable)
+			bShootMissile.setDisable(disable);
 	}
 	
 	class ConnectToServerPressed implements EventHandler<ActionEvent> {
@@ -171,32 +175,18 @@ public class WarClient extends Application {
 		public void handle(ActionEvent event) {
 			if (connected){
 				disableButtons(true);
+				threadRead = false;
 				console.getItems().add(0,"Dis-Connecting from Server...");
-				SocketObject obj = new SocketObject(); 
-				obj.setType(ObjType.disConnect);
-				obj.setMessage("bye from client");
-				socket.sendData(obj);
-				obj = socket.readData();
-				if (obj.getType() == ObjType.disConnect){
-					console.getItems().add(0,obj.getMessage());
-					socket.closeConnection();
-					console.getItems().add(0,"disconnected.");
-				}
-				bConnect.setText("Connect to Server");
+				SocketObject obj = new SocketObject(ObjType.disConnect, "bye from client"); 
+				handleSend(obj);
+				bConnect.setDisable(true);
 			}else{
 				console.getItems().add(0,"Connecting to Server...");
 				bConnect.setText("Dis-Connect from Server");
 				try {
 					disableButtons(false);
 					socket = new SocketData(new Socket("localhost", 7000));
-					SocketObject obj = new SocketObject();
-					obj = new SocketObject();
-					obj = socket.readData();
-					if (obj.getType() == ObjType.connect)
-						console.getItems().add(0,obj.getMessage());
-					obj.setType(ObjType.connect);
-					obj.setMessage("Hello from client");
-					socket.sendData(obj);
+					handleRead();
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
@@ -212,10 +202,7 @@ public class WarClient extends Application {
 			SocketObject obj = new SocketObject(); 
 			obj.setType(ObjType.newLauncher);
 			obj.setMessage("add launcher");
-			socket.sendData(obj);
-			obj = socket.readData();
-			if (obj.getType() == ObjType.newLauncher)
-				console.getItems().add(0,obj.getMessage());
+			handleSend(obj);
 		}
 	}
 	
@@ -223,26 +210,107 @@ public class WarClient extends Application {
 
 		@Override
 		public void handle(ActionEvent event) {
-			
-			SocketObject obj = new SocketObject(); 
-			obj.setType(ObjType.shootMissile);
-			obj.setMessage("shoot missile");
-			socket.sendData(obj);
-			obj = socket.readData();
-			if (obj.getType() == ObjType.shootMissile)
-				console.getItems().add(0,obj.getMessage());
+			if (launchers.getItems().size() == 0 || destinations.getItems().size() == 0)
+				return;
+			SocketObject obj = new SocketObject(ObjType.shootMissile, "shoot missile"); 
+			obj.setLauncherId(launchers.getSelectionModel().getSelectedItem().toString());
+			obj.setDestination(destinations.getSelectionModel().getSelectedItem().toString());
+			handleSend(obj);
 		}
 	}
 
-    @Override public void start(Stage primaryStage) {
+	private void handleRead(){
+		threadRead = true;
+		new Thread(new Runnable() {
+			@Override
+			public void run() {
+				while (threadRead) {
+					synchronized (socket.getInputStream()) {
+						SocketObject obj = socket.readData();
+						showMessage(obj.getMessage());
+						switch (obj.getType()) {
+						case newLauncher:
+							addLauncherID(obj.getLauncherId());
+							break;
+						case launcherDestroied:
+							subLauncherID(obj.getLauncherId());
+							break;
+						case disConnect:
+							socket.closeConnection();
+							break;
+						case connect:
+							addCityNames(obj.getCityNames());
+							SocketObject conObj = new SocketObject(ObjType.connect, "Hello from Client");
+							handleSend(conObj);
+							break;	
+						}
+					}//synchronized
+				}// while
+			}
+		}).start();; // Thread
+	}
+	
+	public synchronized void handleSend(SocketObject obj){
+		if (socket.getSocket().isConnected()){
+			socket.sendData(obj);
+		}
+	}
+	
+    private void showMessage(String text) {
+		Platform.runLater(new Runnable() {
+			@Override
+			public void run() {
+				console.getItems().add(0,text);
+			}
+		});// Platform
+	}
 
-        init(primaryStage);
-        primaryStage.show();
-        headerHeight = headerPane.getHeight();
-        console.setMaxHeight(height - headerHeight);
-    }
+	private void addCityNames(String[] cityNames) {
+    	Platform.runLater(new Runnable() {
+			@Override
+			public void run() {
+				destinations.getItems().addAll(cityNames);
+				destinations.getSelectionModel().selectFirst();
+			}
+		});// Platform
+	}
+    
+    private void subLauncherID(String launcherId) {
+    	Platform.runLater(new Runnable() {
+			@Override
+			public void run() {
+				launchers.getItems().remove(launcherId);
+				if (launchers.getItems().size() == 0 && socket.getSocket().isConnected())
+					bShootMissile.setDisable(true);
+				if (launchers.getItems().size() == 1)
+					launchers.getSelectionModel().selectFirst();
+			}
+		});// Platform
+	}
+    
+    private void addLauncherID(String launcherID) {
+		Platform.runLater(new Runnable() {
+			@Override
+			public void run() {
+				launchers.getItems().add(launcherID);
+				if (launchers.getItems().size() > 0 && socket.getSocket().isConnected())
+					bShootMissile.setDisable(false);
+				if (launchers.getItems().size() == 1)
+					launchers.getSelectionModel().selectFirst();
+			}
+		});// Platform
+	}
 
-    public static void main(String[] args) { 
-    	launch(args); 
-    }
+	public static void main(String[] args) { 
+		launch(args); 
+	}
+
+	@Override 
+	public void start(Stage primaryStage) {
+	    init(primaryStage);
+	    primaryStage.show();
+	    headerHeight = headerPane.getHeight();
+	    console.setMaxHeight(height - headerHeight);
+	}
+    
 }

@@ -49,7 +49,4 @@ public interface WarEventUIListener {
 	/** Add defense Iron Dome from xml **/
 	public String addIronDome(String id);
 
-	/** Returns all war city targets **/
-	public String[] getAllWarDestinations();
-
 }

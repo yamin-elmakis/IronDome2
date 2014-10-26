@@ -137,7 +137,7 @@ public class ConsoleView extends Thread implements IView {
 
 				if (launchersIds.contains(launcher)) {
 					System.out.println("Destination cities to destory:");
-					String[] destinations = l.getAllWarDestinations();
+					String[] destinations = Utils.targetCities;
 
 					for (int j = 0; j < destinations.length; j++)
 						System.out.println((j + 1) + ") " + destinations[j]);

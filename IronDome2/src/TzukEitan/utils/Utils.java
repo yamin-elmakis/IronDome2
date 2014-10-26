@@ -12,6 +12,9 @@ public class Utils {
 	private static final double SUCCES_RATE = 0.7;
 	private static final double IS_HIDDEN_RATE = 0.5;
 	private static final String DATE_FORMAT = "dd/MM/yyyy HH:mm:ss";
+	// TODO is vova using this array
+	public static final String[] targetCities = { "Sderot", "Ofakim", "Beer-Sheva",
+			"Netivot", "Tel-Aviv", "Re'ut" };
 	
 	// create local date
 	public static String getCurrentTime() {

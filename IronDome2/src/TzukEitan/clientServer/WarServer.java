@@ -17,6 +17,7 @@ public class WarServer extends Thread implements IView{
 	
 	private List<WarEventUIListener> allListeners;
 	private SocketData socket;
+	private boolean run;
 	
 	public WarServer() {
 		System.out.println("enter SERVER constractor");
@@ -30,32 +31,38 @@ public class WarServer extends Thread implements IView{
 			Socket newSocket = server.accept(); // blocking
 			// connect
 			socket = new SocketData(newSocket);
-			SocketObject startObj = new SocketObject();
-			startObj.setType(ObjType.connect);
-			startObj.setMessage("Hello from server");
-			socket.sendData(startObj);
-			while (true){
+			SocketObject startObj = new SocketObject(ObjType.connect, "Hellow from server");
+			startObj.setCityNames(Utils.targetCities);
+			handleSend(startObj);
+			run = true;
+			while (run){
 				SocketObject obj = socket.readData();
-			
 				new Thread(new Runnable() {
 					@Override
 					public void run() {
 						// manage connection
-						if (obj.getType() == ObjType.newLauncher){
+						switch (obj.getType()) {
+						case newLauncher:
 							fireAddLauncher();
-						}else if(obj.getType() == ObjType.shootMissile){
+							break;
+
+						case shootMissile:
 							fireShootMissile(obj.getLauncherId(), obj.getDestination());
+							break;
+							
+						case connect:
+							System.out.println(obj.getMessage());
+							break;
+							
+						case disConnect:
+							System.out.println("client disConnected");
+							stopRun();
+							break;
 						}
-						// dis-connect
-//						obj.setType(ObjType.disConnect);
-//						obj.setMessage("bye from server");
-//						socket.sendData(obj);
-//						socket.closeConnection();
 					}
 				}).start();
-				if (obj != null && obj.getType() != ObjType.disConnect)
-					break;
 			} 
+			closeServer();
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		} catch (Exception e2) {
@@ -63,11 +70,16 @@ public class WarServer extends Thread implements IView{
 		}
 	}
 
+	private synchronized void stopRun(){
+		System.out.println("enter stop run");
+		run = false;
+	}
+	
 	public void registerListeners(WarEventUIListener listener) {
 		allListeners.add(listener);
 	}
 	
-	public void closeServer() {
+	private void closeServer() {
 		try {
 			socket.closeConnection();
 			server.close();
@@ -76,6 +88,11 @@ public class WarServer extends Thread implements IView{
 		}
 	}
 
+	public synchronized void handleSend(SocketObject obj){
+		System.out.println("handleSend: " + obj.getMessage());
+		socket.sendData(obj);
+	}
+	
 	private void fireAddLauncher() {
 		for (WarEventUIListener l : allListeners)
 			l.addEnemyLauncher();
@@ -91,17 +108,23 @@ public class WarServer extends Thread implements IView{
 	
 	@Override
 	public void showEnemyAddedLauncher(String launcherId, boolean visible) {
-		// TODO implement
-//		obj.setMessage("launcher added");
-//		socket.sendData(obj);
+		SocketObject obj = new SocketObject(ObjType.newLauncher, "launcher "+launcherId+" added");
+		obj.setLauncherId(launcherId);
+		handleSend(obj);
 	}
 
 	@Override
-	public void showEnemyLaunchMissile(String myMunitionsId, String missileId,
-			String destination, int damage) {
-		// TODO implement
-//		obj.setMessage("missile out");
-//		socket.sendData(obj);
+	public void showEnemyLaunchMissile(String myMunitionsId, String missileId, String destination, int damage) {
+		System.out.println("showEnemyLaunchMissile");
+		SocketObject obj = new SocketObject(ObjType.shootMissile, myMunitionsId + " fired missile "+missileId);
+		handleSend(obj);
+	}
+
+	@Override
+	public void showHitInterceptionLauncher(String whoLaunchedMeId, String type, String missileId, String enemyLauncherId) {
+		SocketObject obj = new SocketObject(ObjType.launcherDestroied, "launcher "+enemyLauncherId+" destroied");
+		obj.setLauncherId(enemyLauncherId);
+		handleSend(obj);
 	}
 
 	@Override
@@ -153,12 +176,6 @@ public class WarServer extends Thread implements IView{
 	@Override
 	public void showMissInterceptionHiddenLauncher(String whoLaunchedMeId,
 			String type, String enemyLauncherId) {
-		/** Not needed */
-	}
-
-	@Override
-	public void showHitInterceptionLauncher(String whoLaunchedMeId,
-			String type, String missileId, String enemyLauncherId) {
 		/** Not needed */
 	}
 

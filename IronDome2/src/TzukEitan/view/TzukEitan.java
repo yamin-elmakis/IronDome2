@@ -8,6 +8,7 @@
 package TzukEitan.view;
 
 import TzukEitan.clientServer.WarServer;
+import TzukEitan.dal.WarDB;
 import TzukEitan.war.War;
 import TzukEitan.war.WarControl;
 
@@ -18,9 +19,6 @@ public class TzukEitan {
 		////// Yamin's code /////
 		WarServer server = new WarServer();
 		server.start();
-//		WarClient client = new WarClient();
-		
-//		client.launch(args);
 		/////////
 		
 		////// Vova's code //////
@@ -28,14 +26,15 @@ public class TzukEitan {
 		////////
 //		WarXMLReader warXML;
 
-//		IView view = new ConsoleView();
+		IView view = new ConsoleView();
 //        IView view = new TzukEitanFrame();
 //		
 		War warModel = new War();
 //
-//		WarDB warDB = new WarDB(warModel);
+		WarDB warDB = new WarDB(warModel);
 		WarControl warControl = new WarControl(warModel);
 		warControl.registerListeners(server);
+		warControl.registerListeners(view);
 //
 //		try {
 //			warXML = new WarXMLReader("warStart.xml", warControl);
@@ -52,7 +51,7 @@ public class TzukEitan {
 //			e.printStackTrace();
 //		}
 
-//		warModel.start();
+		warModel.start();
 //		view.start();
 		
 	}

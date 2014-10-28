@@ -75,6 +75,12 @@ public class EnemyLauncher extends Thread implements Munitions {
 		this.flyTime = flyTime;
 	}
 
+	@Override
+	public void interrupt() {
+		super.interrupt();
+		stopRunning();
+	}
+
 	// launch missile with given parameters
 	@Override
 	public void launchMissile() throws InterruptedException {
@@ -162,7 +168,6 @@ public class EnemyLauncher extends Thread implements Munitions {
 	}
 	
 	public boolean isBeenHit() {
-		// TODO add sync to beenHit 
 		return beenHit;
 	}
 

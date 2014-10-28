@@ -171,8 +171,7 @@ public class War extends Thread {
 	}
 
 	// intercept given missile id and launcher id, Use for xml
-	public synchronized void interceptGivenLauncher(String destructorId,
-			String launcherId) {
+	public synchronized void interceptGivenLauncher(String destructorId, String launcherId) {
 		for (LauncherDestructor ld : launcherDestractorArr)
 			if (ld.getDestructorId().equals(destructorId) && !ld.getIsBusy()) {
 

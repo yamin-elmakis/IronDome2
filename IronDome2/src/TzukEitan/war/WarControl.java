@@ -87,7 +87,7 @@ public class WarControl implements WarEventListener, WarEventUIListener{
 	@Override
 	public void defenseHitInterceptionLauncher(String whoLaunchedMeId, String type, String missileId, String enemyLauncherId) {
 		for (IView view : allViewers)
-			view.showHitInterceptionLauncher(whoLaunchedMeId, type, enemyLauncherId, missileId);
+			view.showHitInterceptionLauncher(whoLaunchedMeId, type, missileId, enemyLauncherId);
 	}
 	
 	@Override

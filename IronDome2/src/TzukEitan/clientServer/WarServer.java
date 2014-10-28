@@ -90,7 +90,8 @@ public class WarServer extends Thread implements IView{
 
 	public synchronized void handleSend(SocketObject obj){
 		System.out.println("handleSend: " + obj.getMessage());
-		socket.sendData(obj);
+		if (socket != null && socket.getSocket().isConnected())
+			socket.sendData(obj);
 	}
 	
 	private void fireAddLauncher() {

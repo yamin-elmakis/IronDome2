@@ -38,9 +38,8 @@ public class DefenseDestructorMissile extends Thread {
 				System.out.println("LAUNCHER interrupt !!!!!!!!");
 			}
 		}// synchronized
-		// TODO add sync to beenHit and wait for it to update
-		System.out.println(launcherToDestroy.isBeenHit());
-		if(launcherToDestroy.isInterrupted()){
+
+		if(launcherToDestroy.isBeenHit()){
 			fireHitEvent();
 		} else {
 			fireMissEvent();
@@ -71,5 +70,4 @@ public class DefenseDestructorMissile extends Thread {
 	public String getMissileId() {
 		return id;
 	}
-
 }

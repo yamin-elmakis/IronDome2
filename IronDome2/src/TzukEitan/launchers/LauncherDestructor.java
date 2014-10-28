@@ -114,8 +114,7 @@ public class LauncherDestructor extends Thread implements Munitions{
 		String MissileId = IdGenerator.defenseDestractorLauncherMissileIdGenerator(type.charAt(0));
 
 		// create new missile
-		currentMissile = new DefenseDestructorMissile(MissileId, toDestroy, ldId,
-				type, statistics);
+		currentMissile = new DefenseDestructorMissile(MissileId, toDestroy, ldId, type, statistics);
 
 		// register all listeners
 		for (WarEventListener l : allListeners)

@@ -7,6 +7,12 @@
 
 package TzukEitan.view;
 
+import java.io.IOException;
+
+import javax.xml.parsers.ParserConfigurationException;
+
+import org.xml.sax.SAXException;
+
 import TzukEitan.clientServer.WarServer;
 import TzukEitan.dal.WarDB;
 import TzukEitan.war.War;
@@ -24,7 +30,7 @@ public class TzukEitan {
 		////// Vova's code //////
 		
 		////////
-//		WarXMLReader warXML;
+		WarXMLReader warXML;
 
 		IView view = new ConsoleView();
 //        IView view = new TzukEitanFrame();
@@ -35,21 +41,22 @@ public class TzukEitan {
 		WarControl warControl = new WarControl(warModel);
 		warControl.registerListeners(server);
 		warControl.registerListeners(view);
+		warControl.setWarStatistics(warDB);
 //
-//		try {
-//			warXML = new WarXMLReader("warStart.xml", warControl);
-//			warXML.start();
-//			warXML.join();
-//
-//		} catch (ParserConfigurationException e) {
-//			e.printStackTrace();
-//		} catch (SAXException e) {
-//			e.printStackTrace();
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		} catch (InterruptedException e) {
-//			e.printStackTrace();
-//		}
+		try {
+			warXML = new WarXMLReader("warStart.xml", warControl);
+			warXML.start();
+			warXML.join();
+
+		} catch (ParserConfigurationException e) {
+			e.printStackTrace();
+		} catch (SAXException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 
 		warModel.start();
 //		view.start();

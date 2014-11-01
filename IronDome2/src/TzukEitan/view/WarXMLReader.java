@@ -33,8 +33,8 @@ public class WarXMLReader extends Thread {
 
 	public void run() {
 		// TODO remove this comment
-//		readEnemyLaunchers();
-//		readDefenseDestructors();
+		readEnemyLaunchers();
+		readDefenseDestructors();
 	}
 
 	//read enemy launchers and their missiles form XML

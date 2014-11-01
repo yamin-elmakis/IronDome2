@@ -1,6 +1,7 @@
 package TzukEitan.war;
 
 public class WarStatistics {
+	
 	private long numOfLaunchMissiles;
 	private long numOfInterceptMissiles;
 	private long numOfHitTargetMissiles;
@@ -55,6 +56,26 @@ public class WarStatistics {
 		return totalDamage;
 	}
 	
+	public void setNumOfLaunchMissiles(long numOfLaunchMissiles) {
+		this.numOfLaunchMissiles = numOfLaunchMissiles;
+	}
+
+	public void setNumOfInterceptMissiles(long numOfInterceptMissiles) {
+		this.numOfInterceptMissiles = numOfInterceptMissiles;
+	}
+
+	public void setNumOfHitTargetMissiles(long numOfHitTargetMissiles) {
+		this.numOfHitTargetMissiles = numOfHitTargetMissiles;
+	}
+
+	public void setNumOfLaunchersDestroyed(long numOfLaunchersDestroyed) {
+		this.numOfLaunchersDestroyed = numOfLaunchersDestroyed;
+	}
+
+	public void setTotalDamage(long totalDamage) {
+		this.totalDamage = totalDamage;
+	}
+
 	public long[] statisticsToArray(){
 		long[] arr = new long[5];
 		arr[0] = numOfLaunchMissiles;

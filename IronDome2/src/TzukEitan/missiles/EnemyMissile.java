@@ -41,8 +41,7 @@ public class EnemyMissile extends Thread {
 
 			// Interrupt is thrown when Enemy missile has been hit.
 		} catch (InterruptedException ex) {
-			// this event was already being thrown by the missile (defense) who
-			// hit this missile.
+			// this event was already being thrown by the missile (defense) who hit this missile.
 			synchronized (this) {
 				beenHit = true;
 			}
@@ -60,6 +59,15 @@ public class EnemyMissile extends Thread {
 		}// finally
 	}// run
 
+	@Override
+	public void interrupt() {
+		super.interrupt();
+		// this event was already being thrown by the missile (defense) who hit this missile.
+		synchronized (this) {
+			beenHit = true;
+		}
+	}
+	
 	// Event
 	private void fireHitEvent() {
 		for (WarEventListener l : allListeners) {
@@ -94,5 +102,4 @@ public class EnemyMissile extends Thread {
 	public boolean isBeenHit(){
 		return beenHit;
 	}
-
 }

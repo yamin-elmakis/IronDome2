@@ -1,8 +1,0 @@
-27/10/2014 22:47:16 INFO	====== >	War started	< ======
-27/10/2014 22:47:36 INFO	Ship S301 added to the defense.
-27/10/2014 22:47:37 INFO	hidden launcher L101 added to the enemy.
-27/10/2014 22:47:44 INFO	S301	Launch: SM2001			Target: L101
-27/10/2014 22:47:44 INFO	S301	Intercept: L101			Status: FAIL
-27/10/2014 22:48:04 INFO	S301	Launch: SM2002			Target: L101
-27/10/2014 22:48:04 INFO	S301	Intercept: L101			Status: SUCCESS
-27/10/2014 22:48:04 INFO	L101	Status: DESTROYED

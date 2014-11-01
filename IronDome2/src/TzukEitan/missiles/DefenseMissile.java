@@ -33,7 +33,7 @@ public class DefenseMissile extends Thread {
 			}
 		}//synchronized
 				
-		if (missileToDestroy.isInterrupted()){
+		if (missileToDestroy.isBeenHit()){
 			fireHitEvent();
 		}
 		else{

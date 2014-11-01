@@ -2,6 +2,7 @@ package TzukEitan.view;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 import java.util.Vector;
 
@@ -57,7 +58,8 @@ public class ConsoleView extends Thread implements IView {
 				flag = true;
 			} catch (NumberFormatException e) {
 				System.out.println("Worng input, please try again:");
-				choise = input.nextInt();
+			} catch (NoSuchElementException e) {
+				System.out.println("Worng input, please try again:");
 			}
 		}
 		return choise;
@@ -209,8 +211,7 @@ public class ConsoleView extends Thread implements IView {
 				if (missilesId.contains(missile))
 					l.interceptGivenMissile(missile);
 				else
-					System.out
-							.println("The missile you selected doesn't exist!");
+					System.out.println("The missile you selected doesn't exist!");
 			}// if
 			else
 				System.out.println("There is no missiles to intercept!");
@@ -223,6 +224,8 @@ public class ConsoleView extends Thread implements IView {
 	}
 
 	private void fireFinishWar() {
+		fireShowStatistics();
+		
 		for (WarEventUIListener l : allListeners) {
 			l.finishWar();
 		}
@@ -290,8 +293,7 @@ public class ConsoleView extends Thread implements IView {
 				+ ". Launch by: " + whoLaunchedMeId);
 	}
 
-	public void showEnemyMissDestination(String whoLaunchedMeId, String id,
-			String destination, String launchTime) {
+	public void showEnemyMissDestination(String whoLaunchedMeId, String id, String destination, String launchTime) {
 		System.out.println("[" + Utils.getCurrentTime() + "] Enemy Missile: "
 				+ id + " MISSED " + destination + " launch at: " + launchTime
 				+ ". Launch by: " + whoLaunchedMeId);
@@ -309,7 +311,7 @@ public class ConsoleView extends Thread implements IView {
 				+ " because he is hidden");
 	}
 
-	public void showHitInterceptionLauncher(String whoLaunchedMeId, String type, String enemyLauncherId, String missileId) {
+	public void showHitInterceptionLauncher(String whoLaunchedMeId, String type, String missileId , String enemyLauncherId) {
 		System.out.println("[" + Utils.getCurrentTime() + "] " + type + ": "
 						+ whoLaunchedMeId + " fired missile: " + missileId
 						+ " and intercept succesfully the Launcher: "

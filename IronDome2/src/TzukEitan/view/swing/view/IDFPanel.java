@@ -10,6 +10,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 
 import TzukEitan.view.swing.action.AddLauncherAction;
+import TzukEitan.view.swing.events.TzukEitanFrameEvents;
+import TzukEitan.view.swing.view.ZahalLuncherPanel.Ztype;
 
 
 public class IDFPanel extends JPanel {
@@ -20,14 +22,14 @@ public class IDFPanel extends JPanel {
 	private IronDomPanel ironDomPanel;
 	private ZahalPanel zahalPanel;
 	
-	public IDFPanel() {
+	public IDFPanel( TzukEitanFrameEvents tzukEitanFrameEvents) {
 		
 		setLayout(new BorderLayout());
 		setBorder(BorderFactory.createTitledBorder(IDFU_TITEL));
 		idfSplit = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
 
-		ironDomPanel = new IronDomPanel();
-		zahalPanel = new ZahalPanel();
+		ironDomPanel = new IronDomPanel(tzukEitanFrameEvents);
+		zahalPanel = new ZahalPanel(tzukEitanFrameEvents);
 		
 		idfSplit.setLeftComponent(zahalPanel);
 		idfSplit.setRightComponent(ironDomPanel);
@@ -38,6 +40,22 @@ public class IDFPanel extends JPanel {
 		add(idfSplit, BorderLayout.CENTER);
 		
 		
+	}
+	
+	public void addIronLuncher(String id , boolean isVisible){
+		ironDomPanel.addLuncherToPanel(id, isVisible);
+	}
+	
+	public void ironChangeVisability(String id , boolean isVisible){
+		ironDomPanel.changeVisability(id, isVisible);
+	}
+	
+	public void addZahalLuncher(String id , Ztype type){
+		zahalPanel.addLuncherToPanel(id, type);
+	}
+	
+	public void zahalChangeVisability(String id , boolean isVisible){
+		zahalPanel.changeVisability(id, isVisible);
 	}
 
 	

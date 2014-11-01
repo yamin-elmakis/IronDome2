@@ -19,6 +19,6 @@ public class AddIronDomAction extends AbstractAction /*implements ActionListener
 	
 	@Override
 	public void actionPerformed(ActionEvent arg) {
-		//TODO implement function to add iron dome
+		ironPanel.addLuncher();
 	}
 }

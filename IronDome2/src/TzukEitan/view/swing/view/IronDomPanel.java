@@ -2,6 +2,7 @@ package TzukEitan.view.swing.view;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
+import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -10,31 +11,55 @@ import javax.swing.JScrollPane;
 
 import TzukEitan.view.swing.action.AddIronDomAction;
 import TzukEitan.view.swing.action.AddLauncherAction;
+import TzukEitan.view.swing.events.TzukEitanFrameEvents;
 
 
 public class IronDomPanel extends JPanel {
 	
 	private JButton btnAddIron;
-	private JPanel humusInnerPanel;
+	private JPanel ironInnerPanel;
+	private TzukEitanFrameEvents tzukEitanFrameEvents;
+	private ArrayList<IronLuncherPanel> lunchers= new ArrayList<IronLuncherPanel>();
 
 	
-	public IronDomPanel() {
-		
+	public IronDomPanel(TzukEitanFrameEvents tzukEitanFrameEvents) {
+		this.tzukEitanFrameEvents = tzukEitanFrameEvents;
 		setLayout(new BorderLayout());
 		setBorder(BorderFactory.createTitledBorder(""));
 
 		btnAddIron = new JButton(new AddIronDomAction(this));
 		add(btnAddIron, BorderLayout.NORTH);
 		
-		humusInnerPanel = new JPanel();
-		humusInnerPanel.setLayout(new GridLayout(0, 2, 10, 10));
+		ironInnerPanel = new JPanel();
+		ironInnerPanel.setLayout(new GridLayout(0, 2, 10, 10));
 		
-		JScrollPane scroller = new JScrollPane(humusInnerPanel);
+		JScrollPane scroller = new JScrollPane(ironInnerPanel);
 		scroller.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		add(scroller, BorderLayout.CENTER);
 	}
 
+	public void addLuncher() {
+		if (tzukEitanFrameEvents!=null){
+			tzukEitanFrameEvents.fireAddDefenseIronDome();
+		}
+	}
 	
+	public void addLuncherToPanel(String id,boolean isVisible){
+		IronLuncherPanel luncher = new IronLuncherPanel(id, this);
+		lunchers.add(luncher);
+		ironInnerPanel.add(luncher);
+		validate();
+		repaint();
+	}
+	
+	public synchronized void changeVisability(String id, boolean isVisible){
+		for (IronLuncherPanel ironLuncherPanel : lunchers) {
+			if (ironLuncherPanel.getId().equals(id)){
+				ironLuncherPanel.changeVisability(isVisible);
+				return;
+			}
+		}
+	}
 		
 }
 

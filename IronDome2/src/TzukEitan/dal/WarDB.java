@@ -127,21 +127,6 @@ public class WarDB implements WarEventListener, IGetWarStatistics{
 	}
 	
 	@Override
-<<<<<<< HEAD
-	public WarStatistics getWarStatistics() {
-		WarStatistics statistics = new WarStatistics();
-		
-		Timestamp start = new Timestamp(System.currentTimeMillis() - 20 * 1000);
-		Timestamp end = new Timestamp(System.currentTimeMillis());
-		statistics.setNumOfLaunchMissiles(getNumOfLaunchMissiles(start, end));
-		statistics.setNumOfLaunchersDestroyed(getNumOfLaunchersDestroyed(start, end));
-		statistics.setNumOfInterceptMissiles(getNumOfInterceptMissiles(start, end));
-		statistics.setNumOfHitTargetMissiles(getNumOfHitTargetMissiles(start, end));
-		statistics.setTotalDamage(getTotalDamage(start, end));	
-		
-		System.out.println("min: " + start.getMinutes());
-		System.out.println("sec: " + start.getSeconds());
-=======
 	public WarStatistics getWarStatistics(Timestamp startTime, Timestamp end) {
 		WarStatistics statistics = new WarStatistics();
 		
@@ -151,7 +136,6 @@ public class WarDB implements WarEventListener, IGetWarStatistics{
 		statistics.setNumOfHitTargetMissiles(getNumOfHitTargetMissiles(startTime , end));
 		statistics.setTotalDamage(getTotalDamage(startTime , end));	
 		
->>>>>>> ddbb993c0b24229c0415f43ea8f49a234597e23c
 		return statistics;
 	}
 
@@ -162,11 +146,7 @@ public class WarDB implements WarEventListener, IGetWarStatistics{
 			statement = connection.prepareStatement("INSERT INTO "+LAUNCHER+" VALUES(?, ?, ?)");
 			statement.setString(1, launcherId);
 			statement.setBoolean(2, visible);
-<<<<<<< HEAD
-			statement.setTimestamp(3, new Timestamp(System.currentTimeMillis()));
-=======
 			statement.setTimestamp(3,  new Timestamp(System.currentTimeMillis()));
->>>>>>> ddbb993c0b24229c0415f43ea8f49a234597e23c
 			statement.executeUpdate();
 		} catch (SQLException e) {
 			printSQLErrors(e);
@@ -428,11 +408,7 @@ public class WarDB implements WarEventListener, IGetWarStatistics{
 	private int getNumOfLaunchMissiles(Timestamp startTime, Timestamp endTime) {
 		PreparedStatement statement = null;
 		try {
-<<<<<<< HEAD
-			statement = connection.prepareStatement("SELECT count(*) as count FROM "+MISSILE +" WHERE launchTime BETWEEN (?, ?)");
-=======
 			statement = connection.prepareStatement("SELECT count(*) FROM "+MISSILE +" WHERE launchTime BETWEEN ? AND ?");
->>>>>>> ddbb993c0b24229c0415f43ea8f49a234597e23c
 			statement.setTimestamp(1, startTime);
 			statement.setTimestamp(2, endTime);
 			ResultSet rs = statement.executeQuery();
@@ -455,11 +431,7 @@ public class WarDB implements WarEventListener, IGetWarStatistics{
 	private int getNumOfHitTargetMissiles(Timestamp startTime, Timestamp endTime) {
 		PreparedStatement statement = null;
 		try {
-<<<<<<< HEAD
-			statement = connection.prepareStatement("SELECT count(*) FROM "+MISSILE+" WHERE didHit = ? AND launchTime BETWEEN (?, ?)");
-=======
 			statement = connection.prepareStatement("SELECT count(*) FROM "+MISSILE+" WHERE didHit = ? AND launchTime BETWEEN ? AND ?");
->>>>>>> ddbb993c0b24229c0415f43ea8f49a234597e23c
 			statement.setBoolean(1, true);
 			statement.setTimestamp(2, startTime);
 			statement.setTimestamp(3, endTime);
@@ -483,11 +455,7 @@ public class WarDB implements WarEventListener, IGetWarStatistics{
 	private int getNumOfLaunchersDestroyed(Timestamp startTime, Timestamp endTime) {
 		PreparedStatement statement = null;
 		try {
-<<<<<<< HEAD
-			statement = connection.prepareStatement("SELECT count(*) FROM "+DEFENSE_DESTRUCTOR_MISSILE+" WHERE didHit = ? AND launchTime BETWEEN (?, ?)");
-=======
 			statement = connection.prepareStatement("SELECT count(*) FROM "+DEFENSE_DESTRUCTOR_MISSILE+" WHERE didHit = ? AND launchTime BETWEEN ? AND ?");
->>>>>>> ddbb993c0b24229c0415f43ea8f49a234597e23c
 			statement.setBoolean(1, true);
 			statement.setTimestamp(2, startTime);
 			statement.setTimestamp(3, endTime);
@@ -511,11 +479,7 @@ public class WarDB implements WarEventListener, IGetWarStatistics{
 	private int getTotalDamage(Timestamp startTime, Timestamp endTime) {
 		PreparedStatement statement = null;
 		try {
-<<<<<<< HEAD
-			statement = connection.prepareStatement("SELECT sum(damage) FROM "+MISSILE +" WHERE didHit = ?AND launchTime BETWEEN (?, ?)");
-=======
 			statement = connection.prepareStatement("SELECT sum(damage) FROM "+MISSILE +" WHERE didHit = ? AND launchTime BETWEEN ? AND ?");
->>>>>>> ddbb993c0b24229c0415f43ea8f49a234597e23c
 			statement.setBoolean(1, true);
 			statement.setTimestamp(2, startTime);
 			statement.setTimestamp(3, endTime);
@@ -539,11 +503,7 @@ public class WarDB implements WarEventListener, IGetWarStatistics{
 	private int getNumOfInterceptMissiles(Timestamp startTime, Timestamp endTime) {
 		PreparedStatement statement = null;
 		try {
-<<<<<<< HEAD
-			statement = connection.prepareStatement("SELECT count(*) FROM " + DEFENCE_MISSILE + " WHERE didHit = ? AND launchTime BETWEEN (?, ?)");
-=======
 			statement = connection.prepareStatement("SELECT count(*) FROM " + DEFENCE_MISSILE + " WHERE didHit = ? AND launchTime BETWEEN ? AND ?");
->>>>>>> ddbb993c0b24229c0415f43ea8f49a234597e23c
 			statement.setBoolean(1, true);
 			statement.setTimestamp(2, startTime);
 			statement.setTimestamp(3, endTime);

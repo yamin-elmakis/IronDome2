@@ -10,11 +10,12 @@ public abstract class WarView {
 	
 	protected abstract void fireInterceptEnemyLauncher();
 	
-	protected abstract void fireAddEnemyMissile();
+	protected abstract void fireAddEnemyMissile(String launcherId, String destination,
+			int damage, int flyTime);
 	
 	protected abstract void fireAddEnemyLauncher();
 	
 	protected abstract void fireAddDefenseIronDome();
 	
-	protected abstract void fireAddDefenseLauncherDestructor();
+	protected abstract void fireAddDefenseLauncherDestructor(String type);
 }

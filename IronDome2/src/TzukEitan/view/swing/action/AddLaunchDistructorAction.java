@@ -6,6 +6,7 @@ import javax.swing.AbstractAction;
 
 import TzukEitan.view.swing.view.HamasPanel;
 import TzukEitan.view.swing.view.IronDomPanel;
+import TzukEitan.view.swing.view.ZahalLuncherPanel.Ztype;
 import TzukEitan.view.swing.view.ZahalPanel;
 
 
@@ -20,6 +21,6 @@ public class AddLaunchDistructorAction extends AbstractAction /*implements Actio
 	
 	@Override
 	public void actionPerformed(ActionEvent arg) {
-		//TODO implement function to add LaunchDistructor
+		zhalPanel.addLuncher(Ztype.ship);
 	}
 }

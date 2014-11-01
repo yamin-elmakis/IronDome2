@@ -103,7 +103,8 @@ public class WarServer extends WarView implements IView, Runnable{
 	}
 	
 	@Override
-	protected void fireAddEnemyMissile() {
+	protected void fireAddEnemyMissile(String launcherId, String destination,
+			int damage, int flyTime){
 		// TODO Auto-generated method stub
 		
 	}
@@ -257,7 +258,7 @@ public class WarServer extends WarView implements IView, Runnable{
 	}
 
 	@Override
-	protected void fireAddDefenseLauncherDestructor() {
+	protected void fireAddDefenseLauncherDestructor(String type) {
 		/** Not needed */
 	}
 }

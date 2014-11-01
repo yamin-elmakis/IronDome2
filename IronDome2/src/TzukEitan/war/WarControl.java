@@ -175,13 +175,8 @@ public class WarControl implements WarEventListener, WarEventUIListener{
 	}
 
 	@Override
-<<<<<<< HEAD
-	public void showStatistics() {
-		WarStatistics statistics = warStatistics.getWarStatistics(); //warModel.getStatistics();
-=======
 	public void showStatistics(Timestamp startTime, Timestamp endTime) {
 		WarStatistics statistics = warStatistics.getWarStatistics(startTime, endTime); //warModel.getStatistics();
->>>>>>> ddbb993c0b24229c0415f43ea8f49a234597e23c
 		
 		if (statistics == null)
 			return;

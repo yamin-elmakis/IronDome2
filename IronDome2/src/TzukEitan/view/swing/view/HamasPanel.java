@@ -3,6 +3,7 @@ package TzukEitan.view.swing.view;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.util.ArrayList;
+import java.util.Random;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -18,10 +19,9 @@ public class HamasPanel extends JPanel {
 	private static String HAMAS_TITEL ="Humus";
 	private JButton btnAddSurvivor;
 	private JPanel humusInnerPanel;
-	private ArrayList<HumosLuncherPanel> luncherPanels = new ArrayList<HumosLuncherPanel>();
+	private ArrayList<HamasLuncherPanel> lunchers= new ArrayList<HamasLuncherPanel>();
 	
 	private TzukEitanFrameEvents tzukEitanFrameEvents;
-
 	
 	public HamasPanel(TzukEitanFrameEvents tzukEitanFrameEvents) {
 		this.tzukEitanFrameEvents = tzukEitanFrameEvents;
@@ -41,53 +41,35 @@ public class HamasPanel extends JPanel {
 	}
 
 	public void addLuncher() {
-		
 		if (tzukEitanFrameEvents!=null){
 			tzukEitanFrameEvents.fireAddLauncherEvent();
 		}
 	}
 	
-	public void addLuncherToPanel(String id ,boolean isVisebale) {
-		HumosLuncherPanel luncher = new HumosLuncherPanel(id,isVisebale, this);
-		luncherPanels.add(luncher);
+	public void addLuncherToPanel(String id,boolean isVisible){
+		HamasLuncherPanel luncher = new HamasLuncherPanel(id,isVisible, this);
+		lunchers.add(luncher);
 		humusInnerPanel.add(luncher);
 		validate();
 		repaint();
 	}
+	
+	public synchronized void changeVisability(String id, boolean isVisible){
+		for (HamasLuncherPanel hamasLuncherPanel : lunchers) {
+			if (hamasLuncherPanel.getId().equals(id)){
+				hamasLuncherPanel.changeVisability(isVisible);
+				return;
+			}
+		}
+	}
+	
+	public void fireAddEnemyMissile(String launcherId, String destination, int flyTime){
+		Random random = new Random(System.currentTimeMillis());
+		int damege = random.nextInt(100);
+		
+		if (tzukEitanFrameEvents!=null) {
+			tzukEitanFrameEvents.fireAddEnemyMissile(launcherId, destination, damege, flyTime);
+		}
+	}
 		
 }
-
-
-
-
-
-//private JPanel launcherPanel;
-//
-//public HamasPanel(){
-//	setLayout(new BorderLayout());
-//	launcherPanel = new JPanel();
-//	add(new JLabel("Hamas"), BorderLayout.NORTH);
-////	launcherPanel.setBorder(BorderFactory.createTitledBorder("Hamas"));
-//	launcherPanel.setLayout(new GridLayout(0, 2, 10, 10));
-//	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-//	Dimension frameSize = new Dimension();
-//	frameSize.setSize(screenSize.width * 0.15, screenSize.height * 0.2);
-//	launcherPanel.setPreferredSize(frameSize);
-//	
-//	JScrollPane scroller = new JScrollPane(launcherPanel);
-//	scroller.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-//	add(scroller, BorderLayout.CENTER);
-//	
-//}
-//
-//public void addLauncher(LauncherLable lable){
-//	launcherPanel.add(lable);
-//	validate();
-//	repaint();
-//}
-//
-//public void removeLauncher(LauncherLable lable){
-//	launcherPanel.remove(lable);
-//	validate();
-//	repaint();
-//}

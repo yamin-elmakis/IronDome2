@@ -21,8 +21,6 @@ public class AddLauncherAction extends AbstractAction /*implements ActionListene
 	@Override
 	public void actionPerformed(ActionEvent arg) {
 		
-		this.humusPanel.addLuncher("test");
-		
-		//TODO implement function to add luncher
+		this.humusPanel.addLuncher();
 	}
 }

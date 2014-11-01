@@ -74,7 +74,7 @@ public class ConsoleView extends WarView implements IView, Runnable {
 
 		switch (choise) {
 		case 1:
-			fireAddDefenseLauncherDestructor();
+			fireAddDefenseLauncherDestructor(null);
 			break;
 		case 2:
 			fireAddDefenseIronDome();
@@ -83,7 +83,7 @@ public class ConsoleView extends WarView implements IView, Runnable {
 			fireAddEnemyLauncher();
 			break;
 		case 4:
-			fireAddEnemyMissile();
+			fireAddEnemyMissile(null,null,0,0);
 			break;
 		case 5:
 			fireInterceptEnemyLauncher();
@@ -101,7 +101,7 @@ public class ConsoleView extends WarView implements IView, Runnable {
 	}
 
 	/* When user is select, an event is throw to the control */
-	protected void fireAddDefenseLauncherDestructor() {
+	protected void fireAddDefenseLauncherDestructor(String t) {
 		// TODO fix this to numbers
 		System.out.println("Please choose between Plane or Ship, for exit press enter");
 		input.nextLine();
@@ -125,7 +125,8 @@ public class ConsoleView extends WarView implements IView, Runnable {
 			l.addEnemyLauncher();
 	}
 
-	protected void fireAddEnemyMissile() {
+	protected void fireAddEnemyMissile(String id, String des,
+			int dam, int ft) {
 		for (WarEventUIListener l : allListeners) {
 			Vector<String> launchersIds = l.showAllLaunchers();
 
@@ -229,11 +230,7 @@ public class ConsoleView extends WarView implements IView, Runnable {
 			l.showStatistics(startWar, endWar);
 	}
 
-<<<<<<< HEAD
-	private void fireFinishWar() {
-=======
 	protected void fireFinishWar() {
->>>>>>> ddbb993c0b24229c0415f43ea8f49a234597e23c
 		fireShowStatistics();
 		
 		for (WarEventUIListener l : allListeners) {
@@ -380,5 +377,7 @@ public class ConsoleView extends WarView implements IView, Runnable {
 				+ defenseLauncherId + " tried to intercept, " + "but missed: "
 				+ launcherId + " doesn't exist!");
 	}
+
+
 
 }

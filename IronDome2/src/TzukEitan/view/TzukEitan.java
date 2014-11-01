@@ -23,15 +23,26 @@ public class TzukEitan {
 
 	public static void main(String[] args) {
 		
+<<<<<<< HEAD
 //		////// Yamin's code /////
 //		WarServer server = new WarServer();
 //		server.start();
 //		/////////
+=======
+		////// Yamin's code /////
+//		WarServer server = new WarServer();
+//		new Thread() {
+//		    public void run() {
+//		    	server.run();
+//		    }
+//		}.start();
+		/////////
+>>>>>>> ddbb993c0b24229c0415f43ea8f49a234597e23c
 		
 		////// Vova's code //////
 		
 		////////
-//		WarXMLReader warXML;
+		WarXMLReader warXML;
 
 //		IView view = new ConsoleView();
         IView view = new TzukEitanFrame();
@@ -43,12 +54,16 @@ public class TzukEitan {
 //		warControl.registerListeners(server);
 		warControl.registerListeners(view);
 //		warControl.setWarStatistics(warDB);
+<<<<<<< HEAD
 //
+=======
+		
+//		 TODO delete this comment
+>>>>>>> ddbb993c0b24229c0415f43ea8f49a234597e23c
 //		try {
 //			warXML = new WarXMLReader("warStart.xml", warControl);
 //			warXML.start();
 //			warXML.join();
-//
 //		} catch (ParserConfigurationException e) {
 //			e.printStackTrace();
 //		} catch (SAXException e) {
@@ -60,7 +75,6 @@ public class TzukEitan {
 //		}
 
 		warModel.start();
-//		view.start();
 		
 	}
 

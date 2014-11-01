@@ -1,5 +1,6 @@
 package TzukEitan.war;
 
+import java.sql.Timestamp;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Vector;
@@ -28,7 +29,11 @@ public class WarControl implements WarEventListener, WarEventUIListener{
 		allViewers.add(viewer);
 		viewer.registerListeners(this);
 		if (viewer instanceof ConsoleView)
-			((ConsoleView) viewer).start();
+			new Thread() {
+		    public void run() {
+		    	((ConsoleView) viewer).run();
+		    }
+		}.start();
 	}
 	
 	public void setWarStatistics(IGetWarStatistics warStatistics) {
@@ -170,14 +175,19 @@ public class WarControl implements WarEventListener, WarEventUIListener{
 	}
 
 	@Override
+<<<<<<< HEAD
 	public void showStatistics() {
 		WarStatistics statistics = warStatistics.getWarStatistics(); //warModel.getStatistics();
+=======
+	public void showStatistics(Timestamp startTime, Timestamp endTime) {
+		WarStatistics statistics = warStatistics.getWarStatistics(startTime, endTime); //warModel.getStatistics();
+>>>>>>> ddbb993c0b24229c0415f43ea8f49a234597e23c
 		
 		if (statistics == null)
 			return;
 		
 		for (IView view : allViewers)
-			view.showStatistics(statistics.statisticsToArray());	
+			view.showStatistics(statistics);	
 	}
 
 	@Override

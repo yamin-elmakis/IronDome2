@@ -1,5 +1,6 @@
 package TzukEitan.listeners;
 
+import java.sql.Timestamp;
 import java.util.Vector;
 
 public interface WarEventUIListener {
@@ -7,7 +8,7 @@ public interface WarEventUIListener {
 	public void finishWar();
 
 	/** Show current war statistics **/
-	public void showStatistics();
+	public void showStatistics(Timestamp startTime, Timestamp endTime);
 
 	/** Ask for current missiles in air **/
 	public Vector<String> chooseMissileToIntercept();

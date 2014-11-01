@@ -12,10 +12,15 @@ import javax.swing.SwingUtilities;
 
 import TzukEitan.listeners.WarEventUIListener;
 import TzukEitan.view.IView;
+<<<<<<< HEAD
 import TzukEitan.view.swing.events.TzukEitanFrameEvents;
+=======
+import TzukEitan.view.WarView;
+import TzukEitan.war.WarStatistics;
+>>>>>>> ddbb993c0b24229c0415f43ea8f49a234597e23c
 
 
-public class TzukEitanFrame implements IView{
+public class TzukEitanFrame extends WarView implements IView{
 	
 	private List<WarEventUIListener> allListeners;
 	private JFrame mainFrame;
@@ -64,7 +69,8 @@ public class TzukEitanFrame implements IView{
 		System.exit(0);
 	}
 
-	public void fireAddLauncherEvent(){
+	@Override
+	public void fireAddEnemyLauncher(){
 		for (WarEventUIListener listener : allListeners) {
 			listener.addEnemyLauncher();
 		}
@@ -195,7 +201,49 @@ public class TzukEitanFrame implements IView{
 	}
 
 	@Override
-	public void showStatistics(long[] array) {
+	public void showStatistics(WarStatistics warStatistics) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	protected void fireShowStatistics() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	protected void fireInterceptMissile() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	protected void fireFinishWar() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	protected void fireInterceptEnemyLauncher() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	protected void fireAddEnemyMissile() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	protected void fireAddDefenseIronDome() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	protected void fireAddDefenseLauncherDestructor() {
 		// TODO Auto-generated method stub
 		
 	}

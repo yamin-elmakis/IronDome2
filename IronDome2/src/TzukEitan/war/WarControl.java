@@ -4,6 +4,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Vector;
 
+import TzukEitan.listeners.IGetWarStatistics;
 import TzukEitan.listeners.WarEventListener;
 import TzukEitan.listeners.WarEventUIListener;
 import TzukEitan.view.ConsoleView;
@@ -14,6 +15,7 @@ import TzukEitan.view.WarXMLReader;
 public class WarControl implements WarEventListener, WarEventUIListener{
 	private War warModel;
 	private List<IView> allViewers;
+	private IGetWarStatistics warStatistics;
 	
 	public WarControl(War warModel){
 		this.warModel = warModel;
@@ -29,6 +31,10 @@ public class WarControl implements WarEventListener, WarEventUIListener{
 			((ConsoleView) viewer).start();
 	}
 	
+	public void setWarStatistics(IGetWarStatistics warStatistics) {
+		this.warStatistics = warStatistics;
+	}
+
 	//Method that related to the view
 	@Override
 	public void defenseLaunchMissile(String myMunitionsId, String missileId, String enemyMissileId) {
@@ -155,7 +161,7 @@ public class WarControl implements WarEventListener, WarEventUIListener{
 	@Override
 	public void finishWar() {
 		WarXMLReader.stopAllThreads();
-		//warModel.finishWar();
+//		warModel.finishWar();
 		
 		//notify the war
 		synchronized (warModel) {
@@ -165,7 +171,11 @@ public class WarControl implements WarEventListener, WarEventUIListener{
 
 	@Override
 	public void showStatistics() {
-		WarStatistics statistics = warModel.getStatistics();
+		WarStatistics statistics = warStatistics.getWarStatistics(); //warModel.getStatistics();
+		
+		if (statistics == null)
+			return;
+		
 		for (IView view : allViewers)
 			view.showStatistics(statistics.statisticsToArray());	
 	}

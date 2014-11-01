@@ -12,7 +12,7 @@ import javax.swing.SwingConstants;
 
 import TzukEitan.view.swing.utils.ImageUtils;
 
-public class LuncherPanel extends JPanel {
+public class HumosLuncherPanel extends JPanel {
 
 	public static String LUNCH_IMAGE = "/images/luncher.jpg";
 	
@@ -22,7 +22,7 @@ public class LuncherPanel extends JPanel {
 
 
 	
-	public LuncherPanel(String id, HamasPanel hamasPanel) {
+	public HumosLuncherPanel(String id,boolean isVisebale, HamasPanel hamasPanel) {
 		setHamasPanel(hamasPanel);
 		setLayout(new BorderLayout());
 		initLabelAndIcon(id);

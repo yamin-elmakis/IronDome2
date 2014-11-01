@@ -285,6 +285,7 @@ public class War extends Thread {
 						el.notify();
 					}//synchronized
 				}//if
+				break;
 			}//if
 		}//for
 	}//method

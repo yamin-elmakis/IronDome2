@@ -6,10 +6,13 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.List;
 import java.util.Vector;
+
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
+
 import TzukEitan.listeners.WarEventUIListener;
 import TzukEitan.view.IView;
+import TzukEitan.view.swing.events.TzukEitanFrameEvents;
 
 
 public class TzukEitanFrame implements IView{
@@ -47,59 +50,9 @@ public class TzukEitanFrame implements IView{
 		Dimension frameSize = new Dimension();
 		frameSize.setSize(screenSize.width * 0.7, screenSize.height * 0.8);
 		mainFrame.setSize(frameSize);
-		MainPanel mainPanel = new MainPanel();
+		MainPanel mainPanel = new MainPanel(tzukEitanFrameEvents);
 		mainFrame.getContentPane().add(mainPanel);
 		
-//		JPanel tzukEitanPanel = new JPanel();
-//		tzukEitanPanel.setSize(frameSize);
-//		tzukEitanPanel.setBorder(BorderFactory.createTitledBorder("war panle"));
-//		tzukEitanPanel.setBackground(Color.YELLOW);
-//		tzukEitanPanel.setLayout(new BorderLayout());
-//		
-//		hamasPanel = new HamasPanel();
-//		controlPanel = new ControlPanel(frameSize);
-//		
-//		JPanel warPanel = new JPanel();
-//		warPanel.setLayout(new BorderLayout());
-//		JPanel right = new JPanel();
-//		JPanel left = new JPanel();
-//		JLabel l2 = new JLabel("IDF");
-//		left.setLayout(new BorderLayout());
-//		right.setLayout(new BorderLayout());
-//		left.add(hamasPanel, BorderLayout.SOUTH);
-//		right.add(l2, BorderLayout.SOUTH);
-//		right.add(new JLabel(), BorderLayout.CENTER);
-//		left.setBackground(Color.red);
-//		right.setBackground(Color.red);
-//		warPanel.add(left, BorderLayout.WEST);
-//		warPanel.add(right, BorderLayout.EAST);
-//		
-////		JButton badd = new JButton("add");
-////		final LauncherLable tester = new LauncherLable("test");
-////		badd.addActionListener(new ActionListener() {
-////			
-////			@Override
-////			public void actionPerformed(ActionEvent arg0) {
-////				hamasPanel.addLauncher(tester);
-////			}
-////		});
-////		JButton sub = new JButton("sub");
-////		sub.addActionListener(new ActionListener() {
-////			
-////			@Override
-////			public void actionPerformed(ActionEvent arg0) {
-////				hamasPanel.removeLauncher(tester);
-////			}
-////		});
-////		JPanel pp = new JPanel();
-////		pp.add(badd);
-////		pp.add(sub);
-////		tzukEitanPanel.add(pp, BorderLayout.SOUTH);
-//		
-//		controlPanel.setMainFrame(this);
-//		tzukEitanPanel.add(controlPanel, BorderLayout.NORTH);
-//		tzukEitanPanel.add(warPanel, BorderLayout.CENTER);
-//		mainFrame.setContentPane(tzukEitanPanel);
 		
 	}
 	
@@ -109,12 +62,6 @@ public class TzukEitanFrame implements IView{
 	
 	private void closeApplication(){
 		System.exit(0);
-//		int result = JOptionPane.showConfirmDialog(this,
-//				"Are you sure you want to exit?", "War is over?",
-//				JOptionPane.YES_NO_OPTION);
-//		if (result == JOptionPane.YES_OPTION) {
-//			System.exit(0);
-//		}
 	}
 
 	public void fireAddLauncherEvent(){
@@ -252,4 +199,14 @@ public class TzukEitanFrame implements IView{
 		// TODO Auto-generated method stub
 		
 	}
+	
+	
+	TzukEitanFrameEvents tzukEitanFrameEvents = new TzukEitanFrameEvents() {
+		
+		@Override
+		public void fireAddLauncherEvent() {
+			TzukEitanFrame.this.fireAddLauncherEvent();
+		}
+	};
+	
 }

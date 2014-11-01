@@ -35,7 +35,6 @@ public class DefenseDestructorMissile extends Thread {
 		synchronized (launcherToDestroy) {
 			if (launcherToDestroy.isAlive() && !launcherToDestroy.getIsHidden() && Utils.randomDestractorSucces()) {
 				launcherToDestroy.interrupt();
-				System.out.println("LAUNCHER interrupt !!!!!!!!");
 			}
 		}// synchronized
 

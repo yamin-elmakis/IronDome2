@@ -2,12 +2,15 @@ package TzukEitan.view.swing.view;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
+import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+
 import TzukEitan.view.swing.action.AddLauncherAction;
+import TzukEitan.view.swing.events.TzukEitanFrameEvents;
 
 
 public class HamasPanel extends JPanel {
@@ -15,9 +18,13 @@ public class HamasPanel extends JPanel {
 	private static String HAMAS_TITEL ="Humus";
 	private JButton btnAddSurvivor;
 	private JPanel humusInnerPanel;
+	private ArrayList<HumosLuncherPanel> luncherPanels = new ArrayList<HumosLuncherPanel>();
+	
+	private TzukEitanFrameEvents tzukEitanFrameEvents;
 
 	
-	public HamasPanel() {
+	public HamasPanel(TzukEitanFrameEvents tzukEitanFrameEvents) {
+		this.tzukEitanFrameEvents = tzukEitanFrameEvents;
 		
 		setLayout(new BorderLayout());
 		setBorder(BorderFactory.createTitledBorder(HAMAS_TITEL));
@@ -33,8 +40,17 @@ public class HamasPanel extends JPanel {
 		add(scroller, BorderLayout.CENTER);
 	}
 
-	public void addLuncher(String id) {
-		humusInnerPanel.add(new LuncherPanel(id, this));
+	public void addLuncher() {
+		
+		if (tzukEitanFrameEvents!=null){
+			tzukEitanFrameEvents.fireAddLauncherEvent();
+		}
+	}
+	
+	public void addLuncherToPanel(String id ,boolean isVisebale) {
+		HumosLuncherPanel luncher = new HumosLuncherPanel(id,isVisebale, this);
+		luncherPanels.add(luncher);
+		humusInnerPanel.add(luncher);
 		validate();
 		repaint();
 	}

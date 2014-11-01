@@ -7,17 +7,19 @@ import java.awt.Toolkit;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 
+import TzukEitan.view.swing.events.TzukEitanFrameEvents;
+
 public class MainPanel extends JPanel {
 	
 	private JSplitPane warSplit,gfxSplt;
 	private HamasPanel humus;
 	private GrfxPanel grfx;
 	private IDFPanel idfPanel;
-//	private TribePanel tribe1, tribe2,ilend;
 
-	public MainPanel() {
+
+
+	public MainPanel(TzukEitanFrameEvents tzukEitanFrameEvents) {
 		setLayout(new BorderLayout());
-
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		Dimension panelSize = new Dimension();
 		panelSize.setSize(screenSize.width * 0.5, screenSize.height * 0.5);
@@ -26,7 +28,7 @@ public class MainPanel extends JPanel {
 		warSplit = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
 		gfxSplt = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
 
-		humus = new HamasPanel();
+		humus = new HamasPanel(tzukEitanFrameEvents);
 		idfPanel = new IDFPanel();
 		grfx = new GrfxPanel();
 
@@ -42,5 +44,9 @@ public class MainPanel extends JPanel {
 		add(gfxSplt, BorderLayout.CENTER);
 	}
 
+	public void addHamasLuncherToPanel(String id ,boolean isVisebale){
+		humus.addLuncherToPanel(id, isVisebale);
+	}
+	
 	
 }

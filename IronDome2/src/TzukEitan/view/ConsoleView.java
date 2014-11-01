@@ -1,5 +1,6 @@
 package TzukEitan.view;
 
+import java.sql.Timestamp;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -8,21 +9,24 @@ import java.util.Vector;
 
 import TzukEitan.listeners.WarEventUIListener;
 import TzukEitan.utils.Utils;
+import TzukEitan.war.WarStatistics;
 
-public class ConsoleView extends Thread implements IView {
+public class ConsoleView extends WarView implements IView, Runnable {
 	private List<WarEventUIListener> allListeners;
 	private Scanner input = new Scanner(System.in);
 	private StringBuilder menu = new StringBuilder(1000);
 	private boolean isRunning = true;
+	private Timestamp startWar;
 
 	public ConsoleView() {
 		allListeners = new LinkedList<WarEventUIListener>();
+		startWar = new Timestamp(System.currentTimeMillis());
 		createMenu();
 	}// cons't
 
 	public void run() {
 		try {
-			sleep(500);
+			Thread.sleep(500);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
@@ -97,7 +101,7 @@ public class ConsoleView extends Thread implements IView {
 	}
 
 	/* When user is select, an event is throw to the control */
-	private void fireAddDefenseLauncherDestructor() {
+	protected void fireAddDefenseLauncherDestructor() {
 		// TODO fix this to numbers
 		System.out.println("Please choose between Plane or Ship, for exit press enter");
 		input.nextLine();
@@ -111,17 +115,17 @@ public class ConsoleView extends Thread implements IView {
 				l.addDefenseLauncherDestructor(type);
 	}
 
-	private void fireAddDefenseIronDome() {
+	protected void fireAddDefenseIronDome() {
 		for (WarEventUIListener l : allListeners)
 			l.addIronDome();
 	}
 
-	private void fireAddEnemyLauncher() {
+	protected void fireAddEnemyLauncher() {
 		for (WarEventUIListener l : allListeners)
 			l.addEnemyLauncher();
 	}
 
-	private void fireAddEnemyMissile() {
+	protected void fireAddEnemyMissile() {
 		for (WarEventUIListener l : allListeners) {
 			Vector<String> launchersIds = l.showAllLaunchers();
 
@@ -163,7 +167,7 @@ public class ConsoleView extends Thread implements IView {
 		}// for
 	}// method
 
-	private void fireInterceptEnemyLauncher() {
+	protected void fireInterceptEnemyLauncher() {
 		for (WarEventUIListener l : allListeners) {
 			Vector<String> launcersId = l.chooseLauncherToIntercept();
 
@@ -191,7 +195,7 @@ public class ConsoleView extends Thread implements IView {
 		}// for
 	}// method
 
-	private void fireInterceptMissile() {
+	protected void fireInterceptMissile() {
 		for (WarEventUIListener l : allListeners) {
 			Vector<String> missilesId = l.chooseMissileToIntercept();
 
@@ -218,12 +222,14 @@ public class ConsoleView extends Thread implements IView {
 		}// for
 	}// method
 
-	private void fireShowStatistics() {
+	protected void fireShowStatistics() {
+		Timestamp endWar = new Timestamp(System.currentTimeMillis());
+		
 		for (WarEventUIListener l : allListeners)
-			l.showStatistics();
+			l.showStatistics(startWar, endWar);
 	}
 
-	private void fireFinishWar() {
+	protected void fireFinishWar() {
 		fireShowStatistics();
 		
 		for (WarEventUIListener l : allListeners) {
@@ -319,26 +325,28 @@ public class ConsoleView extends Thread implements IView {
 	}
 
 	// prints all war statistics
-	public void showStatistics(long[] array) {
+	public void showStatistics(WarStatistics statistics) {
 		StringBuilder msg = new StringBuilder();
 		msg.append("\n[" + Utils.getCurrentTime() + "]"
 				+ "\t\t   War Statistics\n");
 		msg.append("\t\t\t=========================================\n");
-		msg.append("\t\t\t||\tNum of launch missiles: " + array[0] + "\t||\n");
-		msg.append("\t\t\t||\tNum of intercept missiles: " + array[1]
+		msg.append("\t\t\t||\tNum of launch missiles: " + statistics.getNumOfLaunchMissiles() + "\t||\n");
+		msg.append("\t\t\t||\tNum of intercept missiles: " + statistics.getNumOfInterceptMissiles()
 				+ "\t||\n");
-		msg.append("\t\t\t||\tNum of hit target missiles: " + array[2]
+		msg.append("\t\t\t||\tNum of hit target missiles: " + statistics.getNumOfHitTargetMissiles()
 				+ "\t||\n");
-		msg.append("\t\t\t||\tNum of launchers destroyed: " + array[3]
+		msg.append("\t\t\t||\tNum of launchers destroyed: " + statistics.getNumOfLaunchersDestroyed()
 				+ "\t||\n");
-		msg.append("\t\t\t||\ttotal damage: " + array[4] + "\t\t||\n");
+		msg.append("\t\t\t||\ttotal damage: " + statistics.getTotalDamage() + "\t\t||\n");
 		msg.append("\t\t\t==========================================\n");
 		System.out.println(msg.toString());
 	}
 
 	public void showWarHasBeenFinished() {
+		Timestamp end = new Timestamp(System.currentTimeMillis());
+		
 		for (WarEventUIListener l : allListeners) {
-			l.showStatistics();
+			l.showStatistics(startWar, end);
 		}
 
 		System.out.println("[" + Utils.getCurrentTime()

@@ -1,6 +1,7 @@
 package TzukEitan.view;
 
 import TzukEitan.listeners.WarEventUIListener;
+import TzukEitan.war.WarStatistics;
 
 public interface IView {
 
@@ -44,5 +45,5 @@ public interface IView {
 	
 	void showDefenseAddedLD(String ldId, String type);
 	
-	void showStatistics(long[] array);
+	void showStatistics(WarStatistics warStatistics);
 }

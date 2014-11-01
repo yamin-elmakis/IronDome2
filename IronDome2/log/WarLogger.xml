@@ -1,0 +1,50 @@
+01/11/2014 17:16:17 INFO	hidden launcher L101 added to the enemy.
+01/11/2014 17:16:17 INFO	====== >	War started	< ======
+01/11/2014 17:16:17 INFO	Plane P304 added to the defense.
+01/11/2014 17:16:17 INFO	Plane P303 added to the defense.
+01/11/2014 17:16:17 INFO	Ship S302 added to the defense.
+01/11/2014 17:16:17 INFO	Plane P301 added to the defense.
+01/11/2014 17:16:17 INFO	Iron Dome D203 added to the defense.
+01/11/2014 17:16:17 INFO	Iron Dome D202 added to the defense.
+01/11/2014 17:16:17 INFO	Iron Dome D201 added to the defense.
+01/11/2014 17:16:17 INFO	hidden launcher L104 added to the enemy.
+01/11/2014 17:16:17 INFO	visible launcher L103 added to the enemy.
+01/11/2014 17:16:17 INFO	visible launcher L102 added to the enemy.
+01/11/2014 17:16:19 INFO	D201	FAIL: missile M4 does not exist
+01/11/2014 17:16:20 INFO	D202	FAIL: missile M2 does not exist
+01/11/2014 17:16:22 INFO	L102	is now: visible
+01/11/2014 17:16:22 INFO	L101	Launch: M1			Target: Sderot
+01/11/2014 17:16:22 INFO	P301	Launch: PM2001			Target: L101
+01/11/2014 17:16:22 INFO	P301	Intercept: L101			Status: FAIL
+01/11/2014 17:16:23 INFO	L102	Launch: M3			Target: Ofakim
+01/11/2014 17:16:24 INFO	D201	Launch: DM1001			Target: M1
+01/11/2014 17:16:24 INFO	D201	Intercept: M1			Status: SUCCESS
+01/11/2014 17:16:25 INFO	S302	Intercept: L103			Status: FAIL			Reason: Launcher is hidden
+01/11/2014 17:16:26 INFO	P303	Launch: PM2002			Target: L104
+01/11/2014 17:16:26 INFO	P303	Intercept: L104			Status: SUCCESS
+01/11/2014 17:16:26 INFO	L104	Status: DESTROYED
+01/11/2014 17:16:27 INFO	L103	is now: visible
+01/11/2014 17:16:28 INFO	L103	Launch: M5			Target: Netivot
+01/11/2014 17:16:29 INFO	L102	is now: hidden
+01/11/2014 17:16:29 INFO	L102	Target: Ofakim		Status: MISS			Land Time: 01/11/2014 17:16:29
+01/11/2014 17:16:30 INFO	L102	is now: visible
+01/11/2014 17:16:30 INFO	S302	Launch: SM2003			Target: L102
+01/11/2014 17:16:30 INFO	S302	Intercept: L102			Status: SUCCESS
+01/11/2014 17:16:30 INFO	L102	Status: DESTROYED
+01/11/2014 17:16:31 INFO	D203	Launch: DM1002			Target: M5
+01/11/2014 17:16:31 INFO	L103	is now: hidden
+01/11/2014 17:16:31 INFO	L103	Target: Netivot		Status: HIT			Land Time: 01/11/2014 17:16:31			Damage: 5000
+01/11/2014 17:16:32 INFO	D203	Intercept: M5			Status: FAIL 			Damage: 5000
+01/11/2014 17:16:34 INFO	L103	is now: visible
+01/11/2014 17:16:35 INFO	L103	Launch: M6			Target: Tel-Aviv
+01/11/2014 17:16:37 INFO	D201	FAIL: missile M9 does not exist
+01/11/2014 17:16:37 INFO	D203	Launch: DM1003			Target: M6
+01/11/2014 17:16:37 INFO	D203	Intercept: M6			Status: SUCCESS
+01/11/2014 17:16:38 INFO	D203	FAIL: missile M9 does not exist
+01/11/2014 17:16:38 INFO	P304	Launch: PM2004			Target: L103
+01/11/2014 17:16:38 INFO	P304	Intercept: L103			Status: SUCCESS
+01/11/2014 17:16:38 INFO	L103	Status: DESTROYED
+01/11/2014 17:17:47 INFO	hidden launcher L105 added to the enemy.
+01/11/2014 17:18:43 INFO	L105	Launch: M8			Target: Beer-Sheva
+01/11/2014 17:18:55 INFO	L105	Target: Beer-Sheva		Status: HIT			Land Time: 01/11/2014 17:18:55			Damage: 2970
+01/11/2014 17:19:54 INFO	visible launcher L106 added to the enemy.

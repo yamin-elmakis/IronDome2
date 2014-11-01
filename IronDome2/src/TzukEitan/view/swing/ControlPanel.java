@@ -42,7 +42,7 @@ public class ControlPanel extends JPanel implements ActionListener {
 	public void actionPerformed(ActionEvent btn) {
 		String action = btn.getActionCommand();
 		System.out.println("ACTION: "+action);
-		mainFrame.fireAddLauncherEvent();
+		mainFrame.fireAddEnemyLauncher();
 	}
 	
 	public void setMainFrame(TzukEitanFrame frame){

@@ -29,7 +29,11 @@ public class WarControl implements WarEventListener, WarEventUIListener{
 		allViewers.add(viewer);
 		viewer.registerListeners(this);
 		if (viewer instanceof ConsoleView)
-			((ConsoleView) viewer).start();
+			new Thread() {
+		    public void run() {
+		    	((ConsoleView) viewer).run();
+		    }
+		}.start();
 	}
 	
 	public void setWarStatistics(IGetWarStatistics warStatistics) {
@@ -171,18 +175,14 @@ public class WarControl implements WarEventListener, WarEventUIListener{
 	}
 
 	@Override
-	public void showStatistics() {
-		// TODO Vova - need to replace with time that came from the user
-		Timestamp startTime = new Timestamp(System.currentTimeMillis() - 1000 * 60 * 2); // the time 2 minutes ago
-		Timestamp end = new Timestamp(System.currentTimeMillis());
-		
-		WarStatistics statistics = warStatistics.getWarStatistics(startTime, end); //warModel.getStatistics();
+	public void showStatistics(Timestamp startTime, Timestamp endTime) {
+		WarStatistics statistics = warStatistics.getWarStatistics(startTime, endTime); //warModel.getStatistics();
 		
 		if (statistics == null)
 			return;
 		
 		for (IView view : allViewers)
-			view.showStatistics(statistics.statisticsToArray());	
+			view.showStatistics(statistics);	
 	}
 
 	@Override

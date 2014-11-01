@@ -23,8 +23,12 @@ public class TzukEitan {
 	public static void main(String[] args) {
 		
 		////// Yamin's code /////
-		WarServer server = new WarServer();
-		server.start();
+//		WarServer server = new WarServer();
+//		new Thread() {
+//		    public void run() {
+//		    	server.run();
+//		    }
+//		}.start();
 		/////////
 		
 		////// Vova's code //////
@@ -37,29 +41,28 @@ public class TzukEitan {
 //		
 		War warModel = new War();
 //
-		WarDB warDB = new WarDB(warModel);
+//		WarDB warDB = new WarDB(warModel);
 		WarControl warControl = new WarControl(warModel);
-		warControl.registerListeners(server);
+//		warControl.registerListeners(server);
 		warControl.registerListeners(view);
-		warControl.setWarStatistics(warDB);
-//
-		try {
-			warXML = new WarXMLReader("warStart.xml", warControl);
-			warXML.start();
-			warXML.join();
-
-		} catch (ParserConfigurationException e) {
-			e.printStackTrace();
-		} catch (SAXException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
+//		warControl.setWarStatistics(warDB);
+		
+//		 TODO delete this comment
+//		try {
+//			warXML = new WarXMLReader("warStart.xml", warControl);
+//			warXML.start();
+//			warXML.join();
+//		} catch (ParserConfigurationException e) {
+//			e.printStackTrace();
+//		} catch (SAXException e) {
+//			e.printStackTrace();
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		} catch (InterruptedException e) {
+//			e.printStackTrace();
+//		}
 
 		warModel.start();
-//		view.start();
 		
 	}
 

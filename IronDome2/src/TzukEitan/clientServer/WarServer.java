@@ -10,8 +10,10 @@ import TzukEitan.clientServer.SocketData.ObjType;
 import TzukEitan.listeners.WarEventUIListener;
 import TzukEitan.utils.Utils;
 import TzukEitan.view.IView;
+import TzukEitan.view.WarView;
+import TzukEitan.war.WarStatistics;
 
-public class WarServer extends Thread implements IView{
+public class WarServer extends WarView implements IView, Runnable{
 
 	private ServerSocket server;
 	
@@ -43,7 +45,7 @@ public class WarServer extends Thread implements IView{
 						// manage connection
 						switch (obj.getType()) {
 						case newLauncher:
-							fireAddLauncher();
+							fireAddEnemyLauncher();
 							break;
 
 						case shootMissile:
@@ -94,11 +96,18 @@ public class WarServer extends Thread implements IView{
 			socket.sendData(obj);
 	}
 	
-	private void fireAddLauncher() {
+	@Override
+	protected void fireAddEnemyLauncher() {
 		for (WarEventUIListener l : allListeners)
 			l.addEnemyLauncher();
 	}
 	
+	@Override
+	protected void fireAddEnemyMissile() {
+		// TODO Auto-generated method stub
+		
+	}
+
 	private void fireShootMissile(String launcherId, String destination) {
 		int damage = (int) ((Math.random() * Utils.SECOND) + Utils.SECOND * 2);
 		int flyTime = (int) ((Math.random() * Utils.FLY_TIME) + Utils.FLY_TIME);
@@ -107,6 +116,17 @@ public class WarServer extends Thread implements IView{
 			l.addEnemyMissile(launcherId, destination, damage, flyTime);
 	}
 	
+	@Override
+	protected void fireShowStatistics() {
+		/** Not needed */
+	}
+
+	@Override
+	protected void fireFinishWar() {
+		// TODO Auto-generated method stub
+		
+	}
+
 	@Override
 	public void showEnemyAddedLauncher(String launcherId, boolean visible) {
 		SocketObject obj = new SocketObject(ObjType.newLauncher, "launcher "+launcherId+" added");
@@ -217,7 +237,27 @@ public class WarServer extends Thread implements IView{
 	}
 
 	@Override
-	public void showStatistics(long[] array) {
+	public void showStatistics(WarStatistics warStatistics) {
+		/** Not needed */
+	}
+
+	@Override
+	protected void fireInterceptMissile() {
+		/** Not needed */
+	}
+
+	@Override
+	protected void fireInterceptEnemyLauncher() {
+		/** Not needed */
+	}
+
+	@Override
+	protected void fireAddDefenseIronDome() {
+		/** Not needed */
+	}
+
+	@Override
+	protected void fireAddDefenseLauncherDestructor() {
 		/** Not needed */
 	}
 }

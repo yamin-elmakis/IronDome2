@@ -4,7 +4,7 @@ package TzukEitan.listeners;
 public interface WarEventListener {
 
 	/** Enemy Launch missile **/
-	public void enemyLaunchMissile(String myMunitionsId, String missileId, String destination, int damage);
+	public void enemyLaunchMissile(String myMunitionsId, String missileId, String destination, int damage,int flyTime);
 	
 	/** Enemy launcher added **/
 	public void enemyAddedLauncher(String launcherId, boolean visible);

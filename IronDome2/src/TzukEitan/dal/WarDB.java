@@ -161,7 +161,7 @@ public class WarDB implements WarEventListener, IGetWarStatistics{
 	}
 
 	@Override
-	public void enemyLaunchMissile(String myMunitionsId, String missileId, String destination, int damage) {
+	public void enemyLaunchMissile(String myMunitionsId, String missileId, String destination, int damage,int flytime) {
 		PreparedStatement statement = null;
 		try {
 			statement = connection.prepareStatement("INSERT INTO "+MISSILE+" (MissileID, LauncherID, destination, launchTime, damage) VALUES(?, ?, ?, ?, ?)");

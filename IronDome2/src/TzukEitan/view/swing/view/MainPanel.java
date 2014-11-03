@@ -6,8 +6,10 @@ import java.awt.Toolkit;
 
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
+import javax.swing.SwingUtilities;
 
 import TzukEitan.view.swing.events.TzukEitanFrameEvents;
+import TzukEitan.view.swing.view.GrfxPanel.FlingMissile;
 import TzukEitan.view.swing.view.ZahalLuncherPanel.Ztype;
 
 public class MainPanel extends JPanel {
@@ -74,4 +76,17 @@ public class MainPanel extends JPanel {
 	public void zahalChangeVisability(String id, boolean isVisible) {
 		idfPanel.zahalChangeVisability(id, isVisible);
 	}
+	
+	public void addHumosMissile(String id, int flyTime) {
+		grfx.addMissile(id, flyTime);
+	}
+	
+	public void removeHumosMissile(String id){
+		grfx.removeMissile(id);
+	}
+
+	public void explodeHumosMissile(String id) {
+	grfx.explode(id);
+	}
+	
 }

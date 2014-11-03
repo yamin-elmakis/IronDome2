@@ -83,8 +83,9 @@ public class TzukEitanFrame extends WarView implements IView {
 	
 	@Override
 	public void showEnemyLaunchMissile(String myMunitionsId, String missileId,
-			String destination, int damage) {
+			String destination, int damage, int flytime) {
 		System.out.println("showEnemyLaunchMissile "+myMunitionsId+"->"+missileId+" "+destination);
+		mainPanel.addHumosMissile(missileId, flytime);
 
 	}
 
@@ -92,6 +93,7 @@ public class TzukEitanFrame extends WarView implements IView {
 	public void showEnemyMissDestination(String whoLaunchedMeId, String id,
 			String destination, String launchTime) {
 		System.out.println("showEnemyMissDestination "+whoLaunchedMeId+"->"+id+" "+destination);
+		mainPanel.removeHumosMissile(id);
 
 	}
 	
@@ -99,9 +101,10 @@ public class TzukEitanFrame extends WarView implements IView {
 	public void showEnemyHitDestination(String whoLaunchedMeId,
 			String missileId, String destination, int damage) {
 		System.out.println("showEnemyHitDestination "+whoLaunchedMeId+"->"+missileId+" "+destination);
+		mainPanel.explodeHumosMissile(missileId);
 
 	}
-	
+		
 	
 	@Override
 	public void showDefenseAddedIronDome(String ironDomeId) {

@@ -149,7 +149,7 @@ public class EnemyLauncher extends Thread implements Munitions {
 	// Event
 	private void fireLaunchMissileEvent(String missileId) {
 		for (WarEventListener l : allListeners) 
-			l.enemyLaunchMissile(id, missileId, destination, damage);
+			l.enemyLaunchMissile(id, missileId, destination, damage,flyTime);
 		
 		//update statistics
 		statistics.increaseNumOfLaunchMissiles();

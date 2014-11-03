@@ -136,7 +136,7 @@ public class WarServer extends WarView implements IView, Runnable{
 	}
 
 	@Override
-	public void showEnemyLaunchMissile(String myMunitionsId, String missileId, String destination, int damage) {
+	public void showEnemyLaunchMissile(String myMunitionsId, String missileId, String destination, int damage,int flytime) {
 		System.out.println("showEnemyLaunchMissile");
 		SocketObject obj = new SocketObject(ObjType.shootMissile, myMunitionsId + " fired missile "+missileId);
 		handleSend(obj);

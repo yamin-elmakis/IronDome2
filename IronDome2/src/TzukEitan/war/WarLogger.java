@@ -153,7 +153,7 @@ public class WarLogger implements WarEventListener {
 
 	@Override
 	public void enemyLaunchMissile(String myMunitionsId, String missileId,
-			String destination, int damage) {
+			String destination, int damage, int flytime) {
 		theLogger.log(Level.INFO, myMunitionsId + "\tLaunch: " + missileId
 				+ "\t\t\tTarget: " + destination + "\n");
 	}

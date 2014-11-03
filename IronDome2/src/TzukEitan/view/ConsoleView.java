@@ -262,7 +262,7 @@ public class ConsoleView extends WarView implements IView, Runnable {
 				+ " towards launcher: " + enemyLauncherId);
 	}
 
-	public void showEnemyLaunchMissile(String MunitionsId, String missileId, String destination, int damage) {
+	public void showEnemyLaunchMissile(String MunitionsId, String missileId, String destination, int damage,int flytime) {
 		System.out.println("[" + Utils.getCurrentTime() + "] Launcher: "
 				+ MunitionsId + " just launched missile: " + missileId
 				+ " towards: " + destination

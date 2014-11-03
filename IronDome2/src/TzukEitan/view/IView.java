@@ -11,7 +11,7 @@ public interface IView {
 
 	void showDefenseLaunchMissile(String myMunitionsId, String type, String missileId, String enemyLauncherId);
 	
-	void showEnemyLaunchMissile(String myMunitionsId, String missileId, String destination, int damage);
+	void showEnemyLaunchMissile(String myMunitionsId, String missileId, String destination, int damage, int flytime);
 	
 	void showLauncherIsVisible(String id,boolean visible);
 	

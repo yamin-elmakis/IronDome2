@@ -1,1 +1,8 @@
-01/11/2014 21:29:55 INFO	visible launcher L101 added to the enemy.
+03/11/2014 14:05:23 INFO	hidden launcher L101 added to the enemy.
+03/11/2014 14:05:30 INFO	L101	Launch: M1			Target: 4
+03/11/2014 14:05:37 INFO	L101	Target: 4		Status: HIT			Land Time: 03/11/2014 14:05:37			Damage: 12
+03/11/2014 14:05:45 INFO	L101	Launch: M2			Target: 6
+03/11/2014 14:05:53 INFO	L101	Target: 6		Status: HIT			Land Time: 03/11/2014 14:05:53			Damage: 20
+03/11/2014 14:05:56 INFO	L101	Launch: M3			Target: 6
+03/11/2014 14:06:02 INFO	L101	Target: 6		Status: HIT			Land Time: 03/11/2014 14:06:02			Damage: 76
+03/11/2014 14:06:09 INFO	L101	Launch: M4			Target: 11
